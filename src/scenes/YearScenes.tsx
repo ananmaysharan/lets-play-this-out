@@ -224,6 +224,7 @@ export function Y2026QScene() {
             sentimentDelta: 5,
             notification: 'STANDING ↑',
           },
+          { path: 'erosion', pathDelta: 1 },
         ],
         { year: 2026, id: 'B' }
       );
