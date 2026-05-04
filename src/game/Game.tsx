@@ -30,7 +30,7 @@ import {
   Y2029QScene,
 } from '@/scenes/YearScenes';
 import { RecapScene } from '@/scenes/RecapScene';
-import { PolicyScene } from '@/scenes/PolicyScene';
+import { PolicyCtxScene, PolicyScene } from '@/scenes/PolicyScene';
 import { FuturesScene, PoliciesScene } from '@/scenes/AppendixScenes';
 
 import {
@@ -111,6 +111,7 @@ export const SCENES: Record<SceneId, ComponentType> = {
   y2029followup: FollowupScene,
 
   recap: RecapScene,
+  policyCtx: PolicyCtxScene,
   policy: PolicyScene,
 
   end_augmentation_1: EndAugmentation1Scene,

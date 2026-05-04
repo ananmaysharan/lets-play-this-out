@@ -14,6 +14,7 @@ import { NewsTakeover } from "@/components/NewsTakeover";
 import { PATTERN_A, PATTERN_W } from "@/components/PixelLogo";
 import { SceneNewsIntro } from "@/components/SceneNewsIntro";
 import { EndingActions } from "../EndingActions";
+import { EndingLayout } from "./EndingLayout";
 
 export function EndErosion1Scene() {
   const { go } = useGame();
@@ -354,28 +355,34 @@ export function EndErosionLoseScene() {
 
 export function EndErosionFinalScene() {
   return (
-    <div className="ending-screen">
-      <div className="ending-label">JOB EROSION · 2035</div>
-      <h1 className="ending-title" style={{ color: "var(--terracotta)" }}>
-        YOUR JOB
-        <br />
-        IS DECLINING.
-      </h1>
-      <p className="ending-body">
-        You&apos;ve reached a future that researchers call{" "}
-        <strong>Job Erosion</strong>.
-      </p>
-      <p className="ending-body">
-        Your job did not disappear, but the quality and pay degraded. The work
-        has become faster and more measurable, but less creative and less
-        autonomous.
-      </p>
-      <p className="ending-body">
-        You arrived here through a mix of structural pressures and your choices.
-        But this future is far from guaranteed. People, including you, have
-        agency to change how AI is used and governed.
-      </p>
-      <EndingActions />
-    </div>
+    <EndingLayout
+      current="erosion"
+      label="JOB EROSION · 2035"
+      title={
+        <span style={{ color: "var(--terracotta)" }}>
+          YOUR JOB
+          <br />
+          IS DECLINING.
+        </span>
+      }
+      body={
+        <>
+          <p>
+            You&apos;ve reached a future that researchers call{" "}
+            <strong>Job Erosion</strong>.
+          </p>
+          <p>
+            Your job did not disappear, but the quality and pay degraded. The
+            work has become faster and more measurable, but less creative and
+            less autonomous.
+          </p>
+          <p>
+            You arrived here through a mix of structural pressures and your
+            choices. But this future is far from guaranteed. People, including
+            you, have agency to change how AI is used and governed.
+          </p>
+        </>
+      }
+    />
   );
 }

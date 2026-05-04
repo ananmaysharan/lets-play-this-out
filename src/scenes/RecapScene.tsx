@@ -75,7 +75,7 @@ export function RecapScene() {
       <Btn
         color="terracotta"
         className="continue-btn"
-        onClick={() => go("policy")}
+        onClick={() => go("policyCtx")}
       >
         THE BALLOT
       </Btn>

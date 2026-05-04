@@ -27,6 +27,7 @@ export type SceneId =
   | 'y2029q'
   | 'y2029followup'
   | 'recap'
+  | 'policyCtx'
   | 'policy'
   | 'end_augmentation_1'
   | 'end_augmentation_2'

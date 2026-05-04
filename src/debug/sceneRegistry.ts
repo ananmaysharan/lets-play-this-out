@@ -125,8 +125,9 @@ export const sceneNodes: Node<SceneNodeData>[] = [
   { id: 'y2029followup', type: 'sceneThumb', position: { x: x(6), y: y(2) }, data: { title: '2029 · Followup',                    group: '2029', mockState: followupMock('Follow-up', 'A choice with weight. The decade is almost done.', 'recap') } },
 
   // ---------- RECAP / POLICY (col 7) ----------
-  { id: 'recap',  type: 'sceneThumb', position: { x: x(7), y: y(0) }, data: { title: '2030 · Recap',  group: 'recap', mockState: { ...namedPlayer, path: { augmentation: 6, shrinkage: 2, erosion: 1, proworker: 3 } } } },
-  { id: 'policy', type: 'sceneThumb', position: { x: x(7), y: y(1) }, data: { title: '2030 · Ballot', group: 'recap', mockState: namedPlayer } },
+  { id: 'recap',     type: 'sceneThumb', position: { x: x(7), y: y(0) }, data: { title: '2030 · Recap',         group: 'recap', mockState: { ...namedPlayer, path: { augmentation: 6, shrinkage: 2, erosion: 1, proworker: 3 } } } },
+  { id: 'policyCtx', type: 'sceneThumb', position: { x: x(7), y: y(1) }, data: { title: '2030 · Ballot Context', group: 'recap', mockState: namedPlayer } },
+  { id: 'policy',    type: 'sceneThumb', position: { x: x(7), y: y(2) }, data: { title: '2030 · Ballot Vote',    group: 'recap', mockState: namedPlayer } },
 
   // ---------- AUGMENTATION ENDING (lane y = AUG_Y) ----------
   { id: 'end_augmentation_1',     type: 'sceneThumb', position: { x: x(8),  y: AUG_Y         }, data: { title: 'Augmentation · 2031',          group: 'augmentation', mockState: augMock } },
@@ -224,8 +225,9 @@ export const sceneEdges: Edge[] = [
   e('y2029q', 'y2029followup'),
   e('y2029followup', 'recap'),
 
-  // recap → policy → 4 endings
-  e('recap', 'policy'),
+  // recap → policyCtx → policy → 4 endings
+  e('recap', 'policyCtx'),
+  e('policyCtx', 'policy'),
   e('policy', 'end_augmentation_1', { animated: true }),
   e('policy', 'end_erosion_1',      { animated: true }),
   e('policy', 'end_shrinkage_0',    { animated: true }),

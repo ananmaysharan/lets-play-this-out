@@ -21,16 +21,20 @@ export function TeamIntroScene() {
               <div className="metric-tip">
                 <span className="tip-label standing">Company Standing</span>
                 <p>
-                  This shows where you stand with your boss and the company. Keep
-                  an eye on this. It will tell you if you might be headed toward{" "}
-                  <strong>a promotion or a layoff</strong>!
+                  This shows where you stand with your boss and the company.
+                  Keep an eye on this. It will tell you if you might be headed
+                  toward <strong>a promotion or a layoff</strong>!
                 </p>
               </div>
               <div className="metric-tip">
                 <span className="tip-label climate">AI Climate</span>
                 <p>
-                  <strong>Keep an eye on national sentiment toward AI.</strong>{" "}
-                  AI regulation might affect your day to day!
+                  <strong>
+                    Keep an eye on national sentiment toward AI regulation.
+                  </strong>{" "}
+                  AI regulation might affect your day to day! If it is lower,
+                  more people are talking about regulation. Higher value means
+                  less regulation is being discussed!
                 </p>
               </div>
             </div>

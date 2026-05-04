@@ -12,7 +12,7 @@ import { Memo } from "@/components/Memo";
 import { NewsTakeover } from "@/components/NewsTakeover";
 import { PATTERN_T_NYT, PATTERN_W } from "@/components/PixelLogo";
 import { Polaroid, BrooklynPolaroidArt } from "@/components/Polaroid";
-import { ProworkerHeroActions } from "../EndingActions";
+import { EndingLayout } from "./EndingLayout";
 
 export function EndProworker1Scene() {
   const { go } = useGame();
@@ -405,77 +405,38 @@ export function EndProworker7Scene() {
 
 export function EndProworkerFinalScene() {
   return (
-    <div className="ending-hero">
-      <div className="ending-eyebrow">Pro-Worker Redesign · 2035</div>
-      <h1 className="ending-title-pw">
-        A future steered
-        <br />
-        by workers.
-      </h1>
-      <p className="ending-body-pw">
-        You&apos;ve reached a future that experts call{" "}
-        <strong>Pro-worker Redesign.</strong>
-      </p>
-      <p className="ending-body-pw">
-        This future did not happen automatically. It is one categorized by AI
-        being steered by workers and policy toward complementing workers,
-        creating new tasks, and raising the value of human expertise — rather
-        than mainly replacing labor.
-      </p>
-      <p className="ending-body-pw">
-        <em>
-          But this future is far from guaranteed. People, including you, have
-          agency to change how AI becomes part of our daily work.
-        </em>
-      </p>
-
-      <ProworkerHeroActions />
-
-      <div className="your-path-block">
-        <div className="your-path-label">Your Path Here</div>
-        <div className="year-scroll">
-          <div className="year-step">
-            <div className="ys-year">2025</div>
-            <div className="ys-choice">
-              Year 1<br />
-              Decision
-            </div>
-          </div>
-          <div className="year-step">
-            <div className="ys-year">2026</div>
-            <div className="ys-choice">
-              FlowMetrics
-              <br />
-              Pushback
-            </div>
-          </div>
-          <div className="year-step">
-            <div className="ys-year">2027</div>
-            <div className="ys-choice">
-              Hold
-              <br />
-              Position
-            </div>
-          </div>
-          <div className="year-step">
-            <div className="ys-year">2028</div>
-            <div className="ys-choice">
-              Gillette
-              <br />
-              Plan
-            </div>
-          </div>
-          <div className="year-step">
-            <div className="ys-year">2029</div>
-            <div className="ys-choice">
-              Pro-Worker
-              <br />
-              Vote
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
+    <EndingLayout
+      current="proworker"
+      label="PRO-WORKER REDESIGN · 2035"
+      title={
+        <span style={{ color: "var(--forest)" }}>
+          A FUTURE
+          <br />
+          STEERED BY
+          <br />
+          WORKERS.
+        </span>
+      }
+      body={
+        <>
+          <p>
+            You&apos;ve reached a future that experts call{" "}
+            <strong>Pro-worker Redesign.</strong>
+          </p>
+          <p>
+            This future did not happen automatically. It is one categorized by
+            AI being steered by workers and policy toward complementing workers,
+            creating new tasks, and raising the value of human expertise —
+            rather than mainly replacing labor.
+          </p>
+          <p>
+            <em>
+              But this future is far from guaranteed. People, including you,
+              have agency to change how AI becomes part of our daily work.
+            </em>
+          </p>
+        </>
+      }
+    />
   );
 }

@@ -31,7 +31,7 @@ const SCENE_YEAR: Partial<Record<SceneId, number>> = {
   // 2029
   y2029ctx: 2029, y2029q: 2029, y2029followup: 2029,
   // recap + ballot
-  recap: 2030, policy: 2030,
+  recap: 2030, policyCtx: 2030, policy: 2030,
   // augmentation ending: 2031..2035
   end_augmentation_1: 2031,
   end_augmentation_2: 2032, end_augmentation_3: 2032, end_augmentation_3b: 2032,
