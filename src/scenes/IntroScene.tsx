@@ -2,11 +2,14 @@
 
 import posthog from "posthog-js";
 import { useGame } from "@/game/GameProvider";
+import { BlinkingSquares } from "@/components/BlinkingSquares";
 
 export function IntroScene() {
   const { go, hasSave, resume } = useGame();
   return (
-    <div className="intro-wrap">
+    <>
+      <BlinkingSquares />
+      <div className="intro-wrap">
       <h1 className="intro-title">
         <span className="tint-ink">LET&apos;S PLAY</span>
         <span className="tint-terra">THIS OUT</span>
@@ -33,6 +36,7 @@ export function IntroScene() {
       <p className="intro-credits">
         Created by Sophia DeVito · Izzie Mack · Maya Kiernan · Ananmay Sharan
       </p>
-    </div>
+      </div>
+    </>
   );
 }

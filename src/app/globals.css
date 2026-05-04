@@ -51,6 +51,7 @@ body {
     margin: 0 auto;
     min-height: calc(100vh - 40px);
     position: relative;
+    z-index: 1;
 }
 
 .display-font {
@@ -336,6 +337,37 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.blink-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    background-color: var(--cream);
+    background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-position: 0 0;
+}
+.blink-square {
+    position: absolute;
+    display: block;
+    opacity: 0;
+    animation: blink-once 2.8s ease-in-out forwards;
+    will-change: opacity;
+}
+@keyframes blink-once {
+    0% { opacity: 0; }
+    50% { opacity: 0.28; }
+    100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .blink-square { animation: none; opacity: 0; }
 }
 .intro-title {
     font-family: var(--ff-display);
