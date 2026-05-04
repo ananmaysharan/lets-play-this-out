@@ -12,7 +12,7 @@ import { Memo } from "@/components/Memo";
 import { NewsTakeover } from "@/components/NewsTakeover";
 import { PATTERN_T_NYT, PATTERN_W } from "@/components/PixelLogo";
 import { Polaroid, BrooklynPolaroidArt } from "@/components/Polaroid";
-import { EndingLayout } from "./EndingLayout";
+import { EndingCarousel } from "./EndingCarousel";
 
 export function EndProworker1Scene() {
   const { go } = useGame();
@@ -404,39 +404,5 @@ export function EndProworker7Scene() {
 }
 
 export function EndProworkerFinalScene() {
-  return (
-    <EndingLayout
-      current="proworker"
-      label="PRO-WORKER REDESIGN · 2035"
-      title={
-        <span style={{ color: "var(--forest)" }}>
-          A FUTURE
-          <br />
-          STEERED BY
-          <br />
-          WORKERS.
-        </span>
-      }
-      body={
-        <>
-          <p>
-            You&apos;ve reached a future that experts call{" "}
-            <strong>Pro-worker Redesign.</strong>
-          </p>
-          <p>
-            This future did not happen automatically. It is one categorized by
-            AI being steered by workers and policy toward complementing workers,
-            creating new tasks, and raising the value of human expertise —
-            rather than mainly replacing labor.
-          </p>
-          <p>
-            <em>
-              But this future is far from guaranteed. People, including you,
-              have agency to change how AI becomes part of our daily work.
-            </em>
-          </p>
-        </>
-      }
-    />
-  );
+  return <EndingCarousel current="proworker" />;
 }

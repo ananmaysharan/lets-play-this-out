@@ -3029,16 +3029,460 @@ body {
     }
 }
 
+/* Ending carousel — split-card with pill row, arrows, dots, sources.
+   Used by all four final ending scenes. Driven by PATHS constant in
+   src/scenes/endings/EndingCarousel.tsx. */
+.ending-carousel {
+    /* Break out of the 900px #app container — span the full viewport. */
+    width: 100vw;
+    max-width: 1480px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    text-align: center;
+    padding: 24px 32px 32px;
+    --accent: var(--ink);
+}
+@media (min-width: 1480px) {
+    .ending-carousel {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Pill row at top */
+.path-pill-row {
+    display: inline-flex;
+    gap: 0;
+    margin: 0 0 28px;
+    padding: 8px;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+    flex-wrap: wrap;
+}
+.path-pill {
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 8px 14px;
+    border: 0;
+    color: var(--accent);
+    cursor: pointer;
+    background: transparent;
+    transition: background 0.12s ease, color 0.12s ease;
+}
+.path-pill.active {
+    background: var(--accent);
+    color: var(--paper);
+}
+.path-pill[data-text-on-active="ink"].active {
+    color: var(--ink);
+}
+.path-pill:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+}
+
+/* Carousel row */
+.carousel {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    margin: 0 0 24px;
+}
+.carousel-arrow {
+    flex: 0 0 56px;
+    align-self: center;
+    width: 56px;
+    height: 56px;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+    box-shadow: 4px 4px 0 var(--ink);
+    cursor: pointer;
+    font-family: var(--ff-display);
+    font-size: 22px;
+    color: var(--ink);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.carousel-arrow:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--ink);
+}
+.carousel-arrow:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--ink);
+}
+.carousel-arrow:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 2px;
+}
+
+/* Split card */
+.carousel-card {
+    flex: 1 1 auto;
+    position: relative;
+    border: 2px solid var(--ink);
+    box-shadow: 8px 8px 0 var(--ink);
+    background: var(--paper);
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    min-height: 560px;
+    transition: opacity 0.18s ease;
+    text-align: left;
+}
+.carousel-card.swapping {
+    opacity: 0;
+}
+
+/* Status sticker — angled tape */
+.ending-carousel .sticker {
+    position: absolute;
+    top: -18px;
+    left: -10px;
+    transform: rotate(-6deg);
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+    padding: 6px 14px;
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    z-index: 4;
+}
+.ending-carousel .sticker.you-are-here {
+    background: var(--ink);
+    color: var(--paper);
+    transform: rotate(-4deg);
+}
+
+/* LEFT panel — colored */
+.card-left {
+    background: var(--accent);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    position: relative;
+}
+.card-left .path-tile {
+    background: var(--paper);
+    border: 3px solid color-mix(in srgb, var(--accent) 60%, var(--ink));
+    padding: 22px 24px;
+    text-align: center;
+    width: 100%;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.card-left .path-tile .path-name {
+    font-family: var(--ff-display);
+    font-size: 26px;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    margin-bottom: 6px;
+}
+.card-left .path-tile .path-sub {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin: 0;
+}
+.see-how-btn {
+    display: inline-block;
+    padding: 9px 16px;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.see-how-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--ink);
+}
+.see-how-btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 var(--ink);
+}
+.see-how-btn:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 2px;
+}
+
+/* RIGHT panel — content */
+.card-right {
+    padding: 36px 36px 32px;
+    display: flex;
+    flex-direction: column;
+}
+.card-eyebrow {
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+}
+.card-title {
+    font-family: var(--ff-display);
+    font-size: 36px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0 0 18px;
+    text-transform: uppercase;
+}
+.card-body p {
+    font-family: var(--ff-mono);
+    font-size: 13px;
+    line-height: 1.65;
+    margin: 0 0 12px;
+    color: var(--ink);
+}
+.card-body p strong {
+    font-weight: 700;
+}
+.card-body .intro strong {
+    color: var(--accent);
+}
+
+.sources {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed rgba(26, 26, 26, 0.2);
+}
+.sources-label {
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+}
+.sources ol {
+    margin: 0;
+    padding-left: 20px;
+    font-family: var(--ff-mono);
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--ink);
+}
+.sources li {
+    margin-bottom: 4px;
+}
+.sources a {
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+}
+.sources a:hover {
+    color: var(--accent);
+}
+
+/* Pagination dots */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 0 28px;
+}
+.dot-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+.dot-wrap .star {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: var(--ink);
+}
+.dot {
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.12s ease;
+}
+.dot.active {
+    background: var(--ink);
+}
+.dot:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+}
+
+/* Bottom actions */
+.ending-carousel .ending-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+.ec-btn {
+    font-family: var(--ff-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 11px 20px;
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.ec-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--ink);
+}
+.ec-btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 var(--ink);
+}
+.ec-btn-terra {
+    background: var(--terracotta);
+    color: var(--paper);
+}
+.ec-btn-forest {
+    background: var(--forest);
+    color: var(--paper);
+}
+.ec-btn:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 2px;
+}
+
+.footer-line {
+    text-align: center;
+    color: var(--ink-soft);
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    margin: 4px 0 0;
+}
+
+@media (max-width: 760px) {
+    .carousel-card {
+        grid-template-columns: 1fr;
+        min-height: 0;
+    }
+    .card-left {
+        padding: 24px 20px;
+        gap: 20px;
+    }
+    .card-right {
+        padding: 24px 22px 26px;
+    }
+    .card-title {
+        font-size: 26px;
+    }
+    .carousel {
+        gap: 8px;
+    }
+    .carousel-arrow {
+        flex: 0 0 44px;
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+    .path-pill {
+        font-size: 10px;
+        padding: 7px 10px;
+    }
+}
+
 /* Futures comparison diagram — react-d3-tree vertical tree on the left,
    per-year text panel on the right, sticky tab switcher at the bottom.
    Single source of truth for choices: src/game/decisionGraph.ts. */
 .futures-diagram {
-    max-width: 920px;
-    margin: 0 auto;
-    padding: 32px 20px 0;
+    /* Break out of the 900px #app container — match the carousel width. */
+    width: 100vw;
+    max-width: 1480px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding: 24px 32px 32px;
     position: relative;
     --futures-accent: var(--ink);
 }
+@media (min-width: 1480px) {
+    .futures-diagram {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.futures-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 0 0 24px;
+}
+.futures-back {
+    font-family: var(--ff-mono);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    color: var(--ink);
+    padding: 9px 14px;
+    box-shadow: 3px 3px 0 var(--ink);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.futures-back:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--ink);
+}
+.futures-back:active {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 var(--ink);
+}
+.futures-back:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 2px;
+}
+
+.path-pill-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 6px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+.path-pill.active .path-pill-badge {
+    background: var(--paper);
+    color: var(--ink);
+}
+
 .futures-header {
     text-align: left;
     margin-bottom: 28px;
@@ -3153,70 +3597,8 @@ body {
     color: var(--terracotta);
 }
 
-.futures-tabs {
-    position: sticky;
-    bottom: 0;
-    margin: 0 -20px;
-    padding: 16px 20px;
-    background: var(--cream);
-    border-top: 2px solid var(--ink);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    z-index: 5;
-    box-shadow: 0 -8px 16px -8px rgba(0, 0, 0, 0.15);
-}
-.futures-tab {
-    position: relative;
-    font-family: var(--ff-mono);
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    background: var(--paper);
-    border: 2px solid var(--ink);
-    color: var(--ink);
-    padding: 12px 8px;
-    cursor: pointer;
-    box-shadow: 3px 3px 0 var(--shadow);
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
-    text-align: center;
-}
-.futures-tab:hover:not(.is-active) {
-    transform: translate(-1px, -1px);
-    box-shadow: 4px 4px 0 var(--shadow);
-}
-.futures-tab:active {
-    transform: translate(1px, 1px);
-    box-shadow: 2px 2px 0 var(--shadow);
-}
-.futures-tab:focus-visible {
-    outline: 3px solid var(--ink);
-    outline-offset: 2px;
-}
-.futures-tab.is-active {
-    box-shadow: 4px 4px 0 var(--shadow);
-}
-.futures-tab-label {
-    display: block;
-    line-height: 1.2;
-}
-.futures-tab-badge {
-    position: absolute;
-    top: -8px;
-    right: -6px;
-    font-family: var(--ff-mono);
-    font-size: 8px;
-    letter-spacing: 0.1em;
-    background: var(--ink);
-    color: var(--paper);
-    padding: 3px 6px;
-    border-radius: 2px;
-    line-height: 1;
-}
-
 .futures-replay {
-    margin: 24px auto 32px;
+    margin: 32px auto 16px;
     display: block;
 }
 
@@ -3237,14 +3619,6 @@ body {
     .futures-side-row {
         height: auto !important;
         padding: 14px 0;
-    }
-}
-@media (max-width: 520px) {
-    .futures-tabs {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .futures-tab {
-        font-size: 10px;
     }
 }
 

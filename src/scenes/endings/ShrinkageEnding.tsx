@@ -10,7 +10,7 @@ import { Memo } from '@/components/Memo';
 import { NewsTakeover } from '@/components/NewsTakeover';
 import { PATTERN_T_WIDE } from '@/components/PixelLogo';
 import { Stamp } from '@/components/Stamp';
-import { EndingLayout } from './EndingLayout';
+import { EndingCarousel } from './EndingCarousel';
 
 export function EndShrinkage0Scene() {
   const { go } = useGame();
@@ -371,39 +371,5 @@ export function EndShrinkage4Scene() {
 }
 
 export function EndShrinkageFinalScene() {
-  return (
-    <EndingLayout
-      current="shrinkage"
-      label="SELECTIVE SHRINKAGE · 2035"
-      title={
-        <span style={{ color: 'var(--mustard)' }}>
-          THE MARGINS
-          <br />
-          WENT UP.
-          <br />
-          THE JOBS
-          <br />
-          WENT DOWN.
-        </span>
-      }
-      body={
-        <>
-          <p>
-            You&apos;ve reached a future that experts call <strong>Selective Shrinkage</strong>.
-          </p>
-          <p>
-            It didn&apos;t happen all at once. It happened in raises, in restructurings, in polite emails from clients
-            you&apos;d worked with for years.
-          </p>
-          <p>
-            This future isn&apos;t inevitable — but it isn&apos;t an accident either. It&apos;s the result of choices: by
-            companies, by regulators, and by people navigating a system that moves faster than policy does.
-          </p>
-          <p>
-            <em>You were one of those people.</em>
-          </p>
-        </>
-      }
-    />
-  );
+  return <EndingCarousel current="shrinkage" />;
 }

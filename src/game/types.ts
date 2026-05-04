@@ -109,6 +109,13 @@ export interface GameState {
   aug2032Choice: 'A' | 'B' | null;
   aug2034Choice: 'A' | 'B' | null;
   followup: { heading: string; body: string; next: SceneId } | null;
+  /** Transient: which future tab to pre-select when the user navigates to
+   *  the futures diagram from the ending carousel "see how they got here"
+   *  button. Null falls back to endingPath. */
+  viewingFuture: PathKey | null;
+  /** Transient: the scene the user was on before navigating to the futures
+   *  or policies appendix screens, so the "back" button can return there. */
+  previousScene: SceneId | null;
   /** Set once when the pro-worker 2031 bonus is applied; prevents re-application after Resume. */
   proworkerBonusApplied: boolean;
   /** Per-game-run UUID. Used to group analytics events for one play-through; regenerated on RESET. */
@@ -143,6 +150,8 @@ export function createInitialState(): GameState {
     aug2032Choice: null,
     aug2034Choice: null,
     followup: null,
+    viewingFuture: null,
+    previousScene: null,
     proworkerBonusApplied: false,
     gameId: newGameId(),
   };

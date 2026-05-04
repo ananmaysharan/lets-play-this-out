@@ -74,6 +74,8 @@ export type Action =
   | { type: 'SET_DIVIDEND_VOTE'; vote: Vote }
   | { type: 'SET_ENDING'; ending: PathKey }
   | { type: 'SET_AUG_CHOICE'; year: 2032 | 2034; choice: 'A' | 'B' }
+  | { type: 'SET_VIEWING_FUTURE'; future: PathKey | null }
+  | { type: 'SET_PREVIOUS_SCENE'; scene: SceneId | null }
   | { type: 'TEAM_LOSS'; member: TeamMember }
   | { type: 'APPLY_PROWORKER_BONUS' }
   | { type: 'RESET' }
@@ -154,6 +156,10 @@ export function reducer(state: GameState, action: Action): GameState {
       return action.year === 2032
         ? { ...state, aug2032Choice: action.choice }
         : { ...state, aug2034Choice: action.choice };
+    case 'SET_VIEWING_FUTURE':
+      return { ...state, viewingFuture: action.future };
+    case 'SET_PREVIOUS_SCENE':
+      return { ...state, previousScene: action.scene };
     case 'TEAM_LOSS':
       return {
         ...state,

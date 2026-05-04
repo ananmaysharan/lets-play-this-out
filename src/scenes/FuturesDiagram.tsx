@@ -31,11 +31,11 @@ interface PathMeta {
   color: string;
 }
 
-const PATHS: PathMeta[] = [
-  { id: 'erosion',      label: 'JOB EROSION',         color: 'var(--terracotta)' },
-  { id: 'shrinkage',    label: 'SELECTIVE SHRINKAGE', color: 'var(--mustard)' },
-  { id: 'augmentation', label: 'AUGMENTATION',        color: 'var(--teal-dark)' },
-  { id: 'proworker',    label: 'PRO-WORKER',          color: 'var(--forest)' },
+const PATHS: (PathMeta & { textOnActive: 'paper' | 'ink' })[] = [
+  { id: 'augmentation', label: 'AUGMENTATION',        color: 'var(--teal-dark)',  textOnActive: 'paper' },
+  { id: 'erosion',      label: 'JOB EROSION',         color: 'var(--terracotta)', textOnActive: 'paper' },
+  { id: 'shrinkage',    label: 'SELECTIVE SHRINKAGE', color: 'var(--mustard)',    textOnActive: 'ink'   },
+  { id: 'proworker',    label: 'PRO-WORKER REDESIGN', color: 'var(--forest)',     textOnActive: 'paper' },
 ];
 
 const NODE_RADIUS = 14;
@@ -109,8 +109,15 @@ function positionalLetter(
 }
 
 export function FuturesDiagram() {
-  const { state, reset } = useGame();
-  const [active, setActive] = useState<PathKey>(state.endingPath ?? 'augmentation');
+  const { state, go, reset } = useGame();
+  const [active, setActive] = useState<PathKey>(
+    state.viewingFuture ?? state.endingPath ?? 'augmentation',
+  );
+
+  const backScene =
+    state.previousScene ??
+    (state.endingPath ? (`end_${state.endingPath}_final` as const) : 'intro');
+  const backLabel = state.endingPath ? '← BACK TO ENDING' : '← BACK';
 
   const isPlayerPath = active === state.endingPath;
   const rows: TimelineRow[] = useMemo(
@@ -135,6 +142,42 @@ export function FuturesDiagram() {
   return (
     <div className={`futures-diagram${isPlayerPath ? '' : ' is-alt-path'}`}>
       <Hud tag="COMPARE FUTURES" year={2035} />
+
+      <div className="futures-toolbar">
+        <button
+          type="button"
+          className="futures-back"
+          onClick={() => go(backScene)}
+        >
+          {backLabel}
+        </button>
+
+        <nav className="path-pill-row" aria-label="Choose a future to view">
+          {PATHS.map((p) => {
+            const isActive = active === p.id;
+            const isPlayers = state.endingPath === p.id;
+            return (
+              <button
+                key={p.id}
+                type="button"
+                className={`path-pill${isActive ? ' active' : ''}`}
+                data-text-on-active={p.textOnActive}
+                style={{ ['--accent' as string]: p.color }}
+                onClick={() => {
+                  setActive(p.id);
+                  posthog.capture('futures_tab_clicked', {
+                    future: p.id,
+                    was_players_ending: isPlayers,
+                  });
+                }}
+              >
+                {p.label}
+                {isPlayers && <span className="path-pill-badge">YOURS</span>}
+              </button>
+            );
+          })}
+        </nav>
+      </div>
 
       <div className="futures-header">
         <div className="futures-eyebrow">
@@ -185,35 +228,6 @@ export function FuturesDiagram() {
           ))}
         </ol>
       </div>
-
-      <nav className="futures-tabs" aria-label="Compare other futures">
-        {PATHS.map((p) => {
-          const isActive = active === p.id;
-          const isPlayers = state.endingPath === p.id;
-          return (
-            <button
-              key={p.id}
-              type="button"
-              className={`futures-tab${isActive ? ' is-active' : ''}`}
-              style={
-                isActive
-                  ? { background: p.color, color: 'var(--paper)', borderColor: 'var(--ink)' }
-                  : undefined
-              }
-              onClick={() => {
-                setActive(p.id);
-                posthog.capture('futures_tab_clicked', {
-                  future: p.id,
-                  was_players_ending: isPlayers,
-                });
-              }}
-            >
-              <span className="futures-tab-label">{p.label}</span>
-              {isPlayers && <span className="futures-tab-badge">YOUR PATH</span>}
-            </button>
-          );
-        })}
-      </nav>
 
       <Btn color="terracotta" className="futures-replay" onClick={reset}>
         ↻ PLAY AGAIN

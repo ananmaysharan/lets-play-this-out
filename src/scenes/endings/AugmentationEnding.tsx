@@ -11,7 +11,7 @@ import { Hud } from "@/components/Hud";
 import { Memo } from "@/components/Memo";
 import { NewsTakeover } from "@/components/NewsTakeover";
 import { PATTERN_A } from "@/components/PixelLogo";
-import { EndingLayout } from "./EndingLayout";
+import { EndingCarousel } from "./EndingCarousel";
 
 export function EndAugmentation1Scene() {
   const { state, go } = useGame();
@@ -395,42 +395,5 @@ export function EndAugmentation7Scene() {
 }
 
 export function EndAugmentationFinalScene() {
-  return (
-    <EndingLayout
-      current="augmentation"
-      label="AUGMENTATION · 2035"
-      title={
-        <span style={{ color: "var(--teal-dark)" }}>
-          YOU KEPT
-          <br />
-          THE HUMANS
-          <br />
-          IN THE LOOP.
-        </span>
-      }
-      body={
-        <>
-          <p>
-            Your marketing job remained, but the work changed. AI became a
-            co-pilot across the process, and humans moved into roles focused on
-            review, coordination, judgment, and risk.
-          </p>
-          <p>
-            Policy helped make sure some AI productivity gains went back into
-            role redesign instead of flowing only to executives. This future
-            avoided large-scale job losses, and a loss of autonomy. However,
-            there is still more system oversight, more cognitive load, and a
-            constant need to decide where human judgment matters most.
-          </p>
-          <p style={{ fontFamily: "var(--ff-display)" }}>
-            You&apos;ve reached a future that experts call <em>Augmentation</em>.
-          </p>
-          <p className="muted" style={{ fontSize: 13 }}>
-            But this future is far from guaranteed. People, including you, have
-            agency to change how AI becomes part of our daily work.
-          </p>
-        </>
-      }
-    />
-  );
+  return <EndingCarousel current="augmentation" />;
 }
