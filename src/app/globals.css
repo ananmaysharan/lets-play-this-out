@@ -2904,16 +2904,7 @@ body {
     justify-content: center;
 }
 .ending-path-card.is-here {
-    transform: translateY(-4px);
-    box-shadow: 6px 6px 0 var(--shadow);
-}
-.ending-path-arrow {
-    position: absolute;
-    top: -22px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 16px;
-    color: var(--ink);
+    box-shadow: 4px 4px 0 var(--shadow);
 }
 .ending-path-label {
     font-family: var(--ff-display);
@@ -2925,7 +2916,7 @@ body {
     line-height: 1.05;
 }
 .ending-path-card.is-here .ending-path-label {
-    color: var(--ink);
+    color: var(--paper);
 }
 .ending-path-sub {
     font-family: var(--ff-mono);
@@ -2936,7 +2927,7 @@ body {
     letter-spacing: 0.05em;
 }
 .ending-path-card.is-here .ending-path-sub {
-    color: var(--ink);
+    color: var(--paper);
     font-weight: 700;
 }
 
@@ -3003,19 +2994,24 @@ body {
     font-size: 11px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    background: transparent;
-    border: 1px dashed var(--ink-soft);
-    color: var(--ink-soft);
-    padding: 8px 18px;
+    background: var(--terracotta);
+    border: 2px solid var(--ink);
+    color: var(--paper);
+    padding: 10px 22px;
     cursor: pointer;
-    transition: color 0.12s ease, border-color 0.12s ease;
+    box-shadow: 3px 3px 0 var(--shadow);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 .ending-replay:hover {
-    color: var(--ink);
-    border-color: var(--ink);
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--shadow);
+}
+.ending-replay:active {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 var(--shadow);
 }
 .ending-replay:focus-visible {
-    outline: 2px solid var(--ink);
+    outline: 3px solid var(--ink);
     outline-offset: 3px;
 }
 
@@ -3030,6 +3026,225 @@ body {
     .ending-cta {
         font-size: 12px;
         padding: 14px 16px;
+    }
+}
+
+/* Futures comparison diagram — react-d3-tree vertical tree on the left,
+   per-year text panel on the right, sticky tab switcher at the bottom.
+   Single source of truth for choices: src/game/decisionGraph.ts. */
+.futures-diagram {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 32px 20px 0;
+    position: relative;
+    --futures-accent: var(--ink);
+}
+.futures-header {
+    text-align: left;
+    margin-bottom: 28px;
+}
+.futures-eyebrow {
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+}
+.futures-title {
+    font-family: var(--ff-display);
+    font-size: clamp(36px, 7vw, 64px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.futures-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+    margin: 24px 0 88px;
+}
+.futures-tree-wrap {
+    position: relative;
+    flex-shrink: 0;
+}
+/* react-d3-tree wraps its SVG in a div with no class — strip the fill we don't want. */
+.futures-tree-wrap > div,
+.futures-tree-wrap svg {
+    background: transparent;
+}
+
+/* Edge styles. The library applies pathClassFunc output to <path> elements. */
+.futures-link {
+    fill: none;
+    stroke: var(--ink-soft);
+    stroke-width: 1.2px;
+    opacity: 0.35;
+}
+.futures-link-chosen {
+    stroke: var(--futures-accent, var(--ink));
+    stroke-width: 2.5px;
+    opacity: 1;
+}
+.is-alt-path .futures-link-chosen {
+    stroke: var(--terracotta);
+}
+
+/* react-d3-tree adds default classes; override its default fills/strokes. */
+.futures-node-root,
+.futures-node-branch,
+.futures-node-leaf {
+    cursor: default;
+}
+.futures-node-root circle,
+.futures-node-branch circle,
+.futures-node-leaf circle {
+    transition: fill 0.15s ease, stroke 0.15s ease;
+}
+
+.futures-side-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+.futures-side-spacer {
+    /* matches the root-circle row in the SVG so subsequent rows line up */
+    list-style: none;
+}
+.futures-side-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 0;
+    border-top: 1px dashed transparent;
+}
+.futures-side-row + .futures-side-row {
+    border-top-color: rgba(26, 26, 26, 0.08);
+}
+.futures-side-year {
+    font-family: var(--ff-display);
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1;
+}
+.futures-side-decision {
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+.futures-side-choice {
+    font-family: var(--ff-mono);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 360px;
+}
+.futures-side-choice strong {
+    color: var(--futures-accent, var(--ink));
+}
+.is-alt-path .futures-side-choice strong {
+    color: var(--terracotta);
+}
+
+.futures-tabs {
+    position: sticky;
+    bottom: 0;
+    margin: 0 -20px;
+    padding: 16px 20px;
+    background: var(--cream);
+    border-top: 2px solid var(--ink);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    z-index: 5;
+    box-shadow: 0 -8px 16px -8px rgba(0, 0, 0, 0.15);
+}
+.futures-tab {
+    position: relative;
+    font-family: var(--ff-mono);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    color: var(--ink);
+    padding: 12px 8px;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 var(--shadow);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    text-align: center;
+}
+.futures-tab:hover:not(.is-active) {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+.futures-tab:active {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 var(--shadow);
+}
+.futures-tab:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 2px;
+}
+.futures-tab.is-active {
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+.futures-tab-label {
+    display: block;
+    line-height: 1.2;
+}
+.futures-tab-badge {
+    position: absolute;
+    top: -8px;
+    right: -6px;
+    font-family: var(--ff-mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3px 6px;
+    border-radius: 2px;
+    line-height: 1;
+}
+
+.futures-replay {
+    margin: 24px auto 32px;
+    display: block;
+}
+
+@media (max-width: 740px) {
+    .futures-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .futures-tree-wrap {
+        margin: 0 auto;
+    }
+    .futures-side-list {
+        margin-top: 12px;
+    }
+    .futures-side-spacer {
+        display: none;
+    }
+    .futures-side-row {
+        height: auto !important;
+        padding: 14px 0;
+    }
+}
+@media (max-width: 520px) {
+    .futures-tabs {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .futures-tab {
+        font-size: 10px;
     }
 }
 

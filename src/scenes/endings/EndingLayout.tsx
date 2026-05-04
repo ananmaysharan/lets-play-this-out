@@ -73,11 +73,6 @@ export function EndingLayout({ current, label, title, body }: Props) {
                   : { borderColor: p.color }
               }
             >
-              {isHere && (
-                <div className="ending-path-arrow" aria-hidden>
-                  ▼
-                </div>
-              )}
               <div className="ending-path-label">{p.label}</div>
               <div className="ending-path-sub">
                 {isHere ? "You are here" : p.subtitle}
@@ -96,7 +91,9 @@ export function EndingLayout({ current, label, title, body }: Props) {
             go("futures");
           }}
         >
-          <span className="ending-cta-text">EXPLORE YOUR PATH</span>
+          <span className="ending-cta-text">
+            EXPLORE YOUR PATH AND OTHER FUTURES
+          </span>
           <span className="ending-cta-arrow" aria-hidden>
             →
           </span>

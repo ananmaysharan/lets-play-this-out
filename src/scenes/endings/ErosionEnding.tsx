@@ -106,7 +106,7 @@ export function EndErosion2AdsScene() {
 }
 
 export function EndErosion2QScene() {
-  const { go } = useGame();
+  const { go, applyEffects } = useGame();
   const [unlocked, setUnlocked] = useState(false);
 
   const choices = useShuffledOnce([
@@ -162,7 +162,11 @@ export function EndErosion2QScene() {
               color={c.color}
               title={c.title}
               description={c.description}
-              onClick={() => { posthog.capture("decision_made", { year: 2032, decision_id: c.id, scene: "end_erosion_2_q" }); go(c.next); }}
+              onClick={() => {
+                posthog.capture("decision_made", { year: 2032, decision_id: c.id, scene: "end_erosion_2_q" });
+                applyEffects([], { year: 2032, id: c.id });
+                go(c.next);
+              }}
             />
           ))}
         </div>
@@ -262,7 +266,7 @@ export function EndErosion3cScene() {
 }
 
 export function EndErosion4Scene() {
-  const { go } = useGame();
+  const { go, applyEffects } = useGame();
   const [unlocked, setUnlocked] = useState(false);
 
   const choices = useShuffledOnce([
@@ -323,7 +327,11 @@ export function EndErosion4Scene() {
               key={c.id}
               color={c.color}
               title={c.title}
-              onClick={() => { posthog.capture("ending_reached", { ending_path: "erosion", accepted_pay_cut: c.id === "yes" }); go(c.next); }}
+              onClick={() => {
+                posthog.capture("ending_reached", { ending_path: "erosion", accepted_pay_cut: c.id === "yes" });
+                applyEffects([], { year: 2034, id: c.id });
+                go(c.next);
+              }}
             />
           ))}
         </div>

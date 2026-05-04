@@ -6,6 +6,11 @@ import { createPortal } from "react-dom";
 import { useGame } from "@/game/GameProvider";
 import { useShuffledOnce } from "@/game/useShuffledOnce";
 import { useTypewriter } from "@/game/useTypewriter";
+import {
+  type DecisionChoice,
+  getMainDecision,
+  type YearDecision,
+} from "@/game/decisionGraph";
 import { AlexDialogue, LockedContinueBtn } from "@/components/Dialogue";
 import { Btn, ChoiceBtn } from "@/components/Btn";
 import { Confetti } from "@/components/Confetti";
@@ -24,6 +29,41 @@ import { PaperChart } from "@/components/PaperChart";
 import { FmCard } from "@/components/FmCard";
 import { GilCard } from "@/components/GilCard";
 import { useIsThumbnail } from "@/debug/ThumbnailContext";
+
+/** Shared dispatch helper for the standard Q-scene picker.
+ *  Reads choice metadata + effects + followup wiring from decisionGraph. */
+function useDecisionPicker(decision: YearDecision) {
+  const { dispatch, applyEffects, go } = useGame();
+  const followupSceneId = `y${decision.year}followup` as Parameters<
+    typeof go
+  >[0];
+  function pick(id: string) {
+    posthog.capture("decision_made", {
+      year: decision.year,
+      decision_id: id,
+      scene: decision.sceneId,
+    });
+    const choice = decision.choices.find((c) => c.id === id);
+    if (!choice) return;
+    applyEffects(choice.effects, { year: decision.year, id });
+    dispatch({
+      type: "SET_FOLLOWUP",
+      heading: choice.followupHeading ?? "Follow-up",
+      body: choice.followupBody ?? "",
+      next: choice.next,
+    });
+    go(followupSceneId);
+  }
+  return pick;
+}
+
+function asChoiceBtnProps(c: DecisionChoice) {
+  return {
+    color: c.color,
+    title: c.title,
+    description: c.description,
+  };
+}
 
 /* ====================================================================
  * 2025
@@ -80,91 +120,9 @@ export function Y2025CtxScene() {
 }
 
 export function Y2025QScene() {
-  const { dispatch, applyEffects, go } = useGame();
-  function pick(c: "A" | "B" | "C") {
-    posthog.capture("decision_made", { year: 2025, decision_id: c, scene: "y2025q" });
-    if (c === "A") {
-      applyEffects(
-        [
-          {
-            path: "augmentation",
-            pathDelta: 1,
-            standingDelta: -3,
-            sentimentDelta: 0,
-          },
-        ],
-        { year: 2025, id: "A" },
-      );
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up`,
-        body: `Alex asks if this is what you call "getting ahead of something". She's not impressed. But you're still new to being a manager, so it's not held against you yet…`,
-        next: "y2026news",
-      });
-    } else if (c === "B") {
-      applyEffects(
-        [
-          {
-            path: "shrinkage",
-            pathDelta: 2,
-            standingDelta: 10,
-            sentimentDelta: 8,
-            notification: "STANDING ↑ AI CLIMATE ↑",
-          },
-        ],
-        { year: 2025, id: "B" },
-      );
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up`,
-        body: `Your team's Q2 output is top-notch. Strong numbers your first year? That's how you get noticed. You're on Alex's radar as a leader who gets it.`,
-        next: "y2026news",
-      });
-    } else {
-      applyEffects(
-        [
-          {
-            path: "proworker",
-            pathDelta: 2,
-            standingDelta: -10,
-            sentimentDelta: -5,
-            notification: "STANDING ↓ AI CLIMATE ↓",
-          },
-        ],
-        { year: 2025, id: "C" },
-      );
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up`,
-        body: `You tell Alex the team can use AI tools, but raise concerns about creativity and client data. She listens, but you're on thin ice — and it's only been a little while since you started this job.`,
-        next: "y2026news",
-      });
-    }
-    go("y2025followup");
-  }
-  const choices = useShuffledOnce([
-    {
-      id: "A" as const,
-      color: "teal" as const,
-      title: "BUSINESS AS USUAL",
-      description:
-        "Each person uses AI as they see fit — drafts, summaries, notes — but everyone is still responsible for their own output.",
-    },
-    {
-      id: "B" as const,
-      color: "mustard" as const,
-      title: "TAKE INITIATIVE",
-      description:
-        "Push the team to use AI to speed up output across the board. You could use some early impact on your first year on the job.",
-    },
-    {
-      id: "C" as const,
-      color: "forest" as const,
-      title: "PUMP THE BRAKES",
-      description:
-        "Tell your team to be cautious of using AI especially when client-sensitive data is involved. You don't outlaw it, but you're skeptical.",
-    },
-  ]);
+  const decision = getMainDecision(2025)!;
+  const pick = useDecisionPicker(decision);
+  const choices = useShuffledOnce(decision.choices);
   return (
     <>
       <Hud tag="DECISION 01" year={2025} />
@@ -178,9 +136,7 @@ export function Y2025QScene() {
         {choices.map((c) => (
           <ChoiceBtn
             key={c.id}
-            color={c.color}
-            title={c.title}
-            description={c.description}
+            {...asChoiceBtnProps(c)}
             onClick={() => pick(c.id)}
           />
         ))}
@@ -242,119 +198,9 @@ export function Y2026CtxScene() {
 }
 
 export function Y2026QScene() {
-  const { dispatch, applyEffects, go } = useGame();
-  function pick(c: "A" | "B" | "B2" | "C") {
-    posthog.capture("decision_made", { year: 2026, decision_id: c, scene: "y2026q" });
-    if (c === "A") {
-      applyEffects(
-        [
-          {
-            path: "proworker",
-            pathDelta: 1,
-            standingDelta: -2,
-            sentimentDelta: -2,
-          },
-          { path: "augmentation", pathDelta: 1 },
-        ],
-        { year: 2026, id: "A" },
-      );
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up · Added Context`,
-        body: `Your FlowMetric rank hasn't improved, but you show Alex strong client feedback numbers in defense of what you call "high-quality slow work." She's impressed you stayed late, but frustrated you're not prioritizing the FlowMetrics data. These extra hours are definitely not going to get you a bonus!`,
-        next: "y2027news",
-      });
-    } else if (c === "B") {
-      applyEffects(
-        [
-          {
-            path: "shrinkage",
-            pathDelta: 2,
-            standingDelta: 8,
-            sentimentDelta: 5,
-            notification: "STANDING ↑",
-          },
-          { path: "erosion", pathDelta: 1 },
-        ],
-        { year: 2026, id: "B" },
-      );
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up · Lean Into the Dashboard`,
-        body: `Priya, your most junior employee, builds AI templates for campaign assets that let your team hit the goal. Some workflows are now almost AI from start to end. Your team jumps to #2. Alex notices. Another promotion feels within reach.`,
-        next: "y2027news",
-      });
-    } else if (c === "B2") {
-      applyEffects(
-        [
-          {
-            path: "erosion",
-            pathDelta: 3,
-            standingDelta: 10,
-            sentimentDelta: 8,
-            notification: "STANDING ↑↑ AI CLIMATE ↑",
-          },
-        ],
-        { year: 2026, id: "B2" },
-      );
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up · Bonuses Tied to Velocity`,
-        body: `Alex is impressed by your initiative. You're no longer just a manager who follows direction, you're one who sets it.`,
-        next: "y2027news",
-      });
-    } else {
-      applyEffects(
-        [
-          {
-            path: "proworker",
-            pathDelta: 3,
-            standingDelta: -8,
-            sentimentDelta: -6,
-            notification: "STANDING ↓ AI CLIMATE ↓",
-          },
-        ],
-        { year: 2026, id: "C" },
-      );
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up · Push Back on the Metric`,
-        body: `Alex pushes back hard. You win a partial concession: FlowMetrics won't be used in performance reviews — for now. But watch out! You've spent some political capital and your team has now fallen to #9 in FlowMetrics rankings.`,
-        next: "y2027news",
-      });
-    }
-    go("y2026followup");
-  }
-  const choices = useShuffledOnce([
-    {
-      id: "A" as const,
-      color: "teal" as const,
-      title: "ADD CONTEXT",
-      description:
-        "Tell your team efficiency matters, but good marketing requires judgment. Pull late nights gathering qualitative client feedback manually to show Alex the impact of your work.",
-    },
-    {
-      id: "B" as const,
-      color: "mustard" as const,
-      title: "LEAN INTO THE DASHBOARD",
-      description:
-        "Set output velocity as a North Star metric. Team goal: top 3 rank by Q3.",
-    },
-    {
-      id: "B2" as const,
-      color: "orange" as const,
-      title: "TAKE INITIATIVE",
-      description:
-        "Go to Alex and propose tying Q4 bonuses to individual output velocity scores. You know what keeps your team motivated.",
-    },
-    {
-      id: "C" as const,
-      color: "forest" as const,
-      title: "PUSH BACK ON THE METRIC",
-      description:
-        "Request a meeting with Alex and HR. Argue FlowMetrics is a dangerous metric for creative work.",
-    },
-  ]);
+  const decision = getMainDecision(2026)!;
+  const pick = useDecisionPicker(decision);
+  const choices = useShuffledOnce(decision.choices);
   return (
     <>
       <Hud tag="DECISION 02" year={2026} />
@@ -367,9 +213,7 @@ export function Y2026QScene() {
         {choices.map((c) => (
           <ChoiceBtn
             key={c.id}
-            color={c.color}
-            title={c.title}
-            description={c.description}
+            {...asChoiceBtnProps(c)}
             onClick={() => pick(c.id)}
           />
         ))}
@@ -445,87 +289,9 @@ export function Y2027CtxScene() {
 }
 
 export function Y2027QScene() {
-  const { dispatch, applyEffects, go } = useGame();
-  function pick(c: "A" | "B" | "C") {
-    posthog.capture("decision_made", { year: 2027, decision_id: c, scene: "y2027q" });
-    if (c === "A") {
-      applyEffects([{ path: "augmentation", pathDelta: 3, standingDelta: 2 }], {
-        year: 2027,
-        id: "A",
-      });
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up · Humans in the Loop`,
-        body: `Junior staff are now acting as AI output editors that keep the work trustworthy. Alex is satisfied with your AI usage, but says headcount will be reviewed again next quarter.`,
-        next: "y2028ctx",
-      });
-      go("y2027followup");
-    } else if (c === "B") {
-      applyEffects(
-        [
-          {
-            path: "shrinkage",
-            pathDelta: 3,
-            standingDelta: 8,
-            sentimentDelta: 5,
-            notification: "STANDING ↑",
-          },
-          { teamLoss: "samarth" },
-        ],
-        { year: 2027, id: "B" },
-      );
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up · The Tough Call`,
-        body: `Your Q4 numbers look excellent. Alex is happy with your work and your team is on track to be one of the top performers this year. However, some of the other members of the team were sad to lose Samarth…`,
-        next: "y2028ctx",
-      });
-      go("y2027followup");
-    } else {
-      applyEffects(
-        [
-          {
-            path: "proworker",
-            pathDelta: 4,
-            standingDelta: -12,
-            sentimentDelta: -4,
-            notification: "STANDING ↓↓ AI CLIMATE ↓",
-          },
-        ],
-        { year: 2027, id: "C" },
-      );
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up · Into the Field`,
-        body: `Your juniors come back with real conversations, real places, and real human insight that no model can scrape. It's good stuff. But your standing is on thin ice, and you might be next out the door…`,
-        next: "y2027proworker",
-      });
-      go("y2027followup");
-    }
-  }
-  const choices = useShuffledOnce([
-    {
-      id: "A" as const,
-      color: "teal" as const,
-      title: "KEEP HUMANS IN THE LOOP",
-      description:
-        "AI output needs managing. Someone has to catch errors, maintain brand voice, keep the quality bar from quietly dropping.",
-    },
-    {
-      id: "B" as const,
-      color: "orange" as const,
-      title: "MAKE THE TOUGH CALL",
-      description:
-        "Your least effective junior, Samarth, has terrible FlowMetrics scores. An agentic tool can already cover ~75% of his work.",
-    },
-    {
-      id: "C" as const,
-      color: "forest" as const,
-      title: "SEND THEM INTO THE FIELD",
-      description:
-        "Refuse to cut anyone. Instead, redesign the junior roles entirely and send them out daily as on-the-ground cultural correspondents.",
-    },
-  ]);
+  const decision = getMainDecision(2027)!;
+  const pick = useDecisionPicker(decision);
+  const choices = useShuffledOnce(decision.choices);
   return (
     <>
       <Hud tag="DECISION 03" year={2027} />
@@ -539,9 +305,7 @@ export function Y2027QScene() {
         {choices.map((c) => (
           <ChoiceBtn
             key={c.id}
-            color={c.color}
-            title={c.title}
-            description={c.description}
+            {...asChoiceBtnProps(c)}
             onClick={() => pick(c.id)}
           />
         ))}
@@ -780,83 +544,9 @@ export function Y2028CtxScene() {
 }
 
 export function Y2028QScene() {
-  const { dispatch, applyEffects, go } = useGame();
-  function pick(c: "A" | "B" | "C") {
-    posthog.capture("decision_made", { year: 2028, decision_id: c, scene: "y2028q" });
-    if (c === "A") {
-      applyEffects([{ path: "augmentation", pathDelta: 4, standingDelta: 3 }], {
-        year: 2028,
-        id: "A",
-      });
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up · Automate Smarter`,
-        body: `You pitch it to Gillette as the best of both worlds. Jade steps into the new role and the new ads show an increase in performance. However, Jade now has a lot on her plate and starts to develop dark circles under her eyes…`,
-        next: "y2029ctx",
-      });
-    } else if (c === "B") {
-      applyEffects(
-        [
-          {
-            path: "erosion",
-            pathDelta: 3,
-            standingDelta: 8,
-            sentimentDelta: 8,
-            notification: "STANDING ↑↑ · AI CLIMATE ↑",
-          },
-          { path: "shrinkage", pathDelta: 2 },
-        ],
-        { year: 2028, id: "B" },
-      );
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up · Get More Personal`,
-        body: `The ads are working. Personalization is paying off. Your standing at the agency is better than ever. What could go wrong?`,
-        next: "y2029ctx",
-      });
-    } else {
-      applyEffects(
-        [
-          {
-            path: "proworker",
-            pathDelta: 4,
-            standingDelta: -3,
-            sentimentDelta: -3,
-          },
-        ],
-        { year: 2028, id: "C" },
-      );
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up · Lean Into the Human Voice`,
-        body: `Gillette is nervous, this goes against everything their competitors are doing. You tell them that's the point. Only time will tell!`,
-        next: "y2029ctx",
-      });
-    }
-    go("y2028followup");
-  }
-  const choices = useShuffledOnce([
-    {
-      id: "A" as const,
-      color: "teal" as const,
-      title: "AUTOMATE SMARTER",
-      description: `You build a dual workflow: every member on your team has an AI "twin" that is available to answer questions at all times. Your team members are still responsible for managing the relationships, but the Gillette team can leverage your team's expertise at any time, for the same cost. You assign your employee Jade to manage the Gillette AI integration.`,
-    },
-    {
-      id: "B" as const,
-      color: "orange" as const,
-      title: "GET MORE PERSONAL",
-      description:
-        "You pitch Gillette on a fully agentic AI system trained specifically on their audience data. Real-time personalization at a scale no human team can match.",
-    },
-    {
-      id: "C" as const,
-      color: "forest" as const,
-      title: "LEAN INTO THE HUMAN VOICE",
-      description:
-        "You tell Gillette to stop competing on volume and win on voice instead. You start doing IRL activations in barbershops across the country. Strip back the cadence. Real stories. Real language. Real humans.",
-    },
-  ]);
+  const decision = getMainDecision(2028)!;
+  const pick = useDecisionPicker(decision);
+  const choices = useShuffledOnce(decision.choices);
   return (
     <>
       <Hud tag="DECISION 04" year={2028} />
@@ -867,9 +557,7 @@ export function Y2028QScene() {
         {choices.map((c) => (
           <ChoiceBtn
             key={c.id}
-            color={c.color}
-            title={c.title}
-            description={c.description}
+            {...asChoiceBtnProps(c)}
             onClick={() => pick(c.id)}
           />
         ))}
@@ -934,94 +622,9 @@ export function Y2029CtxScene() {
 }
 
 export function Y2029QScene() {
-  const { dispatch, applyEffects, go } = useGame();
-  function pick(c: "A" | "B" | "C") {
-    posthog.capture("decision_made", { year: 2029, decision_id: c, scene: "y2029q" });
-    if (c === "A") {
-      applyEffects(
-        [
-          {
-            path: "augmentation",
-            pathDelta: 3,
-            standingDelta: -2,
-            sentimentDelta: -2,
-          },
-        ],
-        { year: 2029, id: "A" },
-      );
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up · Director of Human-AI Synergy`,
-        body: `Alex approves it. The new hire changes the dynamic immediately. Jade exhales for the first time in a year. But it means you and Alex are not seeing any of the benefits… you worry Alex might not be thrilled!`,
-        next: "recap",
-      });
-    } else if (c === "B") {
-      applyEffects(
-        [
-          {
-            path: "shrinkage",
-            pathDelta: 4,
-            standingDelta: 8,
-            sentimentDelta: 5,
-            notification: "STANDING ↑↑",
-          },
-        ],
-        { year: 2029, id: "B" },
-      );
-      dispatch({ type: "TEAM_LOSS", member: "jade" });
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up · Manager Raise`,
-        body: `Your raise came at a cost. One junior role must get absorbed into the automated pipeline to offset the salary bump, and Jade is laid off. You're orchestrating agents more than managing people now. The lean setup works, but you're a different kind of manager than you were in 2025.`,
-        next: "recap",
-      });
-    } else {
-      applyEffects(
-        [
-          {
-            path: "proworker",
-            pathDelta: 3,
-            standingDelta: -6,
-            sentimentDelta: -3,
-            notification: "STANDING ↓",
-          },
-        ],
-        { year: 2029, id: "C" },
-      );
-      dispatch({ type: "TEAM_LOSS", member: "marcus" });
-      dispatch({ type: "TEAM_LOSS", member: "priya" });
-      dispatch({
-        type: "SET_FOLLOWUP",
-        heading: `Follow-up · Pay for Retraining`,
-        body: `Marcus and Priya leave for 6 months of retraining! However, you might be the next one out the door at this rate. Alex is not thrilled the money did not go to managerial level raises.`,
-        next: "recap",
-      });
-    }
-    go("y2029followup");
-  }
-  const choices = useShuffledOnce([
-    {
-      id: "A" as const,
-      color: "teal" as const,
-      title: "BRING ON A DIRECTOR OF HUMAN-AI SYNERGY",
-      description:
-        "Jade stepped into the AI Content Strategist role in 2028, and has been burning out quietly. You propose hiring someone for the role…",
-    },
-    {
-      id: "B" as const,
-      color: "mustard" as const,
-      title: "TAKE A MANAGER RAISE",
-      description:
-        "Alex offers you a personal promotion. She says the margins support it. You say yes.",
-    },
-    {
-      id: "C" as const,
-      color: "forest" as const,
-      title: "PAY FOR RETRAINING",
-      description:
-        "Your team is doing great, but it's clear you don't need this many hands anymore. You can use the money to help one or two of your junior staff retrain in new career paths.",
-    },
-  ]);
+  const decision = getMainDecision(2029)!;
+  const pick = useDecisionPicker(decision);
+  const choices = useShuffledOnce(decision.choices);
   return (
     <>
       <Hud tag="DECISION 05" year={2029} />
@@ -1037,9 +640,7 @@ export function Y2029QScene() {
         {choices.map((c) => (
           <ChoiceBtn
             key={c.id}
-            color={c.color}
-            title={c.title}
-            description={c.description}
+            {...asChoiceBtnProps(c)}
             onClick={() => pick(c.id)}
           />
         ))}

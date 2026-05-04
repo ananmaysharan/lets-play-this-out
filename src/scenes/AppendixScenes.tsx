@@ -3,60 +3,10 @@
 import { useGame } from '@/game/GameProvider';
 import { Btn } from '@/components/Btn';
 import { Hud } from '@/components/Hud';
+import { FuturesDiagram } from './FuturesDiagram';
 
 export function FuturesScene() {
-  const { reset } = useGame();
-  return (
-    <>
-      <Hud tag="COMPARE FUTURES" year={2035} />
-      <h1 className="display-font" style={{ fontSize: 36, margin: '10px 0 20px' }}>
-        Four futures. One world.
-      </h1>
-      <p className="muted" style={{ fontSize: 13, marginBottom: 20 }}>
-        These aren&apos;t guarantees. They&apos;re scenarios shaped by policy, choices, and market pressure. The one you landed
-        on was shaped by what YOU did.
-      </p>
-
-      <div className="memo">
-        <div className="memo-header teal">
-          <span>AUGMENTATION</span>
-          <span>HOLDING ON</span>
-        </div>
-        <div className="memo-body">
-          Humans kept in the loop. AI as co-pilot. More cognitive load, more oversight, but jobs remain — altered.
-        </div>
-      </div>
-      <div className="memo">
-        <div className="memo-header">
-          <span>JOB EROSION</span>
-          <span>LIMBO</span>
-        </div>
-        <div className="memo-body">
-          Jobs don&apos;t vanish but degrade. Lower pay, less creativity, fewer skills rewarded. Work measured in microtasks.
-        </div>
-      </div>
-      <div className="memo">
-        <div className="memo-header mustard">
-          <span>SELECTIVE SHRINKAGE</span>
-          <span>PROMOTED</span>
-        </div>
-        <div className="memo-body">Clean cuts. Higher margins. Fewer people. A good year for whoever survived the round.</div>
-      </div>
-      <div className="memo">
-        <div className="memo-header forest">
-          <span>PRO-WORKER REDESIGN</span>
-          <span>UNDER REVIEW</span>
-        </div>
-        <div className="memo-body">
-          Policy + worker voice steer AI toward complementing labor. Roles redesigned. Productivity gains shared.
-        </div>
-      </div>
-
-      <Btn color="terracotta" className="continue-btn" onClick={reset}>
-        ↻ PLAY AGAIN
-      </Btn>
-    </>
-  );
+  return <FuturesDiagram />;
 }
 
 export function PoliciesScene() {
