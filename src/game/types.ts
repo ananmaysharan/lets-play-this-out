@@ -34,6 +34,7 @@ export type SceneId =
   | 'end_augmentation_3'
   | 'end_augmentation_3b'
   | 'end_augmentation_4'
+  | 'end_augmentation_4_ads'
   | 'end_augmentation_5'
   | 'end_augmentation_6'
   | 'end_augmentation_7'
@@ -78,7 +79,6 @@ export interface Effect {
   path?: PathKey;
   pathDelta?: number;
   standingDelta?: number;
-  sentimentDelta?: number;
   notification?: string;
   teamLoss?: TeamMember;
   setProWorkerHeld?: 'yes' | 'no';
@@ -95,7 +95,6 @@ export interface GameState {
   name: string;
   avatar: number; // 1..8
   standing: number; // 0..100
-  aiSentiment: number; // 0..100
   year: number;
   path: Record<PathKey, number>;
   history: HistoryEntry[];
@@ -137,7 +136,6 @@ export function createInitialState(): GameState {
     name: '',
     avatar: 1,
     standing: 50,
-    aiSentiment: 50,
     year: 2025,
     path: { augmentation: 0, shrinkage: 0, erosion: 0, proworker: 0 },
     history: [],

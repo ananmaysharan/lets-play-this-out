@@ -46,7 +46,6 @@ const augMock: Partial<GameState> = {
   ...namedPlayer,
   endingPath: 'augmentation',
   standing: 62,
-  aiSentiment: 55,
   path: { augmentation: 8, shrinkage: 2, erosion: 1, proworker: 3 },
   aug2032Choice: 'A',
   aug2034Choice: 'B',
@@ -56,7 +55,6 @@ const erosionMock: Partial<GameState> = {
   ...namedPlayer,
   endingPath: 'erosion',
   standing: 28,
-  aiSentiment: 70,
   path: { augmentation: 1, shrinkage: 3, erosion: 5, proworker: 0 },
 };
 
@@ -64,7 +62,6 @@ const shrinkageMock: Partial<GameState> = {
   ...namedPlayer,
   endingPath: 'shrinkage',
   standing: 78,
-  aiSentiment: 80,
   path: { augmentation: 2, shrinkage: 9, erosion: 1, proworker: 0 },
   team: { priya: false, samarth: false, marcus: false, jade: true, willow: false },
 };
@@ -73,7 +70,6 @@ const proworkerMock: Partial<GameState> = {
   ...namedPlayer,
   endingPath: 'proworker',
   standing: 42,
-  aiSentiment: 38,
   path: { augmentation: 3, shrinkage: 1, erosion: 1, proworker: 12 },
   proWorkerHeld: 'yes',
 };
@@ -135,6 +131,7 @@ export const sceneNodes: Node<SceneNodeData>[] = [
   { id: 'end_augmentation_3',     type: 'sceneThumb', position: { x: x(10), y: AUG_Y - 90    }, data: { title: 'Aug · 2032 (A · Review)',      group: 'augmentation', mockState: augMock } },
   { id: 'end_augmentation_3b',    type: 'sceneThumb', position: { x: x(10), y: AUG_Y + 110   }, data: { title: 'Aug · 2032 (B · Skip Review)', group: 'augmentation', mockState: { ...augMock, aug2032Choice: 'B' } } },
   { id: 'end_augmentation_4',     type: 'sceneThumb', position: { x: x(11), y: AUG_Y         }, data: { title: 'Augmentation · 2033 News',     group: 'augmentation', mockState: augMock } },
+  { id: 'end_augmentation_4_ads', type: 'sceneThumb', position: { x: x(11.5), y: AUG_Y - 110 }, data: { title: 'Augmentation · 2033 Ads',      group: 'augmentation', mockState: augMock } },
   { id: 'end_augmentation_5',     type: 'sceneThumb', position: { x: x(12), y: AUG_Y         }, data: { title: 'Augmentation · 2033 Damage',   group: 'augmentation', mockState: augMock } },
   { id: 'end_augmentation_6',     type: 'sceneThumb', position: { x: x(13), y: AUG_Y         }, data: { title: 'Augmentation · 2034 Pivot Q',  group: 'augmentation', mockState: augMock } },
   { id: 'end_augmentation_7',     type: 'sceneThumb', position: { x: x(14), y: AUG_Y         }, data: { title: 'Augmentation · 2034 Working',  group: 'augmentation', mockState: augMock } },
@@ -239,7 +236,8 @@ export const sceneEdges: Edge[] = [
   e('end_augmentation_2', 'end_augmentation_3b'),
   e('end_augmentation_3', 'end_augmentation_4'),
   e('end_augmentation_3b', 'end_augmentation_4'),
-  e('end_augmentation_4', 'end_augmentation_5'),
+  e('end_augmentation_4', 'end_augmentation_4_ads'),
+  e('end_augmentation_4_ads', 'end_augmentation_5'),
   e('end_augmentation_5', 'end_augmentation_6'),
   e('end_augmentation_6', 'end_augmentation_7'),
   e('end_augmentation_7', 'end_augmentation_final'),

@@ -8,6 +8,7 @@ import { AvatarSprite } from "@/components/AvatarSprite";
 import { Btn, ChoiceBtn } from "@/components/Btn";
 import { AlexDialogue } from "@/components/Dialogue";
 import { Hud } from "@/components/Hud";
+import { InflammatoryAds } from "@/components/InflammatoryAds";
 import { Memo } from "@/components/Memo";
 import { NewsTakeover } from "@/components/NewsTakeover";
 import { PATTERN_A } from "@/components/PixelLogo";
@@ -131,11 +132,7 @@ export function EndAugmentation2Scene() {
   return (
     <>
       <Hud tag="AUGMENTATION · DECISION" year={2032} />
-      <Memo
-        headerColor="mustard"
-        headerLeft="ALEX'S OFFICE · AGAIN"
-        headerRight="THE QUESTION"
-      >
+      <Memo headerColor="mustard" headerLeft="ALEX'S OFFICE" headerRight="">
         <p>Alex calls you back into her office.</p>
       </Memo>
 
@@ -236,8 +233,33 @@ export function EndAugmentation4Scene() {
           consumers say ads felt &quot;creepily personal.&quot;
         </>
       }
-      onDismiss={() => go("end_augmentation_5")}
+      onDismiss={() => go("end_augmentation_4_ads")}
     />
+  );
+}
+
+export function EndAugmentation4AdsScene() {
+  const { go } = useGame();
+  return (
+    <>
+      <Hud tag="GILLETTE BACKLASH" year={2033} />
+      <Memo headerLeft="THE ADS" headerRight="GOING VIRAL">
+        <p>
+          The targeting model had been pulling biometric and behavioral signals
+          to optimize for what it flagged as &quot;high-conversion emotional
+          states.&quot; Nobody had time to look closely at what that meant in
+          practice. Now the ads are everywhere.
+        </p>
+      </Memo>
+      <InflammatoryAds />
+      <Btn
+        color="terracotta"
+        className="continue-btn"
+        onClick={() => go("end_augmentation_5")}
+      >
+        Continue
+      </Btn>
+    </>
   );
 }
 
@@ -252,12 +274,7 @@ export function EndAugmentation5Scene() {
         headerLeft="GILLETTE IS ON THE LINE"
         headerRight="CRISIS MODE"
       >
-        <p>Gillette is on the line, and something tells you it is not good.</p>
-        <p>
-          Some of your personalized ads crossed the line. Biometric data is
-          being used to help AI agents target campaigns, and this time the
-          targeting felt too precise. Too intimate. Too creepy.
-        </p>
+        <p>Gillette is on the line, and they are not happy.</p>
         <p>The backlash is heavy.</p>
         {choseA ? (
           <>
@@ -315,9 +332,9 @@ export function EndAugmentation6Scene() {
     {
       id: "B" as const,
       color: "teal" as const,
-      title: 'IMPLEMENT A "HUMAN-VETTED" CERTIFICATION',
+      title: "ADD A CREATIVE AI DIRECTOR",
       description:
-        "Maintain AI production speed but add a human moral compass and taste filter to every campaign.",
+        "Keep the AI engine, but put a human creative lead on every campaign. They shape the concept, push back on generic outputs, and always make the final calls.",
     },
   ]);
   const text = `"You need to do something about this, our clients are not happy."`;
@@ -374,11 +391,11 @@ export function EndAugmentation7Scene() {
       <Hud tag="IT'S WORKING" year={2034} />
       <div className="followup">
         <strong>
-          {choseA ? "Human-Led Creative" : "Human-Vetted Certification"}
+          {choseA ? "Human-Led Creative" : "Creative AI Director"}
         </strong>
         {choseA
           ? `Your clients like it! They want campaigns that still feel made by humans. The people who created the work are now credited directly in the final ad with a small photo and their name. The initiative is a smashing success and spreads across the agency.`
-          : `Your clients like it! They want campaigns that still feel made by people. This allows you to keep the scale of AI while reassuring clients that a human "moral compass" and "taste filter" guided every decision. The initiative is a smashing success and spreads across the agency.`}
+          : `It works. Clients still get AI speed, but the campaigns feel less generic because real people are steering them. Human creative leads become the new agency standard!`}
       </div>
       <Btn
         color="terracotta"

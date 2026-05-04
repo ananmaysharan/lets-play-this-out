@@ -583,11 +583,128 @@ body {
     background: var(--paper);
     border: 2px solid var(--ink);
     box-shadow: 4px 4px 0 var(--shadow);
+    align-items: center;
+}
+.hud-metrics-row.solo {
+    grid-template-columns: 1fr;
 }
 .hud-metric {
     display: flex;
     flex-direction: column;
     gap: 6px;
+}
+
+/* HUD team roster (replaces AI Climate after team has been introduced) */
+.hud-team-roster {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+.hud-team-pip {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1 1 0;
+    min-width: 0;
+    cursor: default;
+    outline: none;
+}
+.hud-team-pip-img {
+    width: 100%;
+    max-width: 64px;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: transparent;
+}
+.hud-team-pip-img img,
+.hud-team-pip-img svg {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    object-position: center top;
+    image-rendering: pixelated;
+    display: block;
+    transition:
+        filter 0.4s ease,
+        opacity 0.4s ease;
+}
+.hud-team-pip.gone .hud-team-pip-img img,
+.hud-team-pip.gone .hud-team-pip-img svg {
+    filter: grayscale(1);
+    opacity: 0.4;
+}
+.hud-team-pip-name {
+    margin-top: 4px;
+    font-family: var(--ff-archivo);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1.1;
+}
+.hud-team-pip.gone .hud-team-pip-name {
+    opacity: 0.5;
+}
+.hud-team-pip-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+    padding: 6px 10px;
+    white-space: nowrap;
+    border: 1.5px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--shadow);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
+    z-index: 10;
+}
+.hud-team-pip-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--ink);
+}
+.hud-team-pip:hover .hud-team-pip-tooltip,
+.hud-team-pip:focus-visible .hud-team-pip-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+.hud-team-pip:focus-visible .hud-team-pip-img {
+    outline: 2px solid var(--mustard);
+    outline-offset: 2px;
+}
+@media (max-width: 600px) {
+    .hud-team-pip-img {
+        max-width: 48px;
+    }
+    .hud-team-pip-name {
+        font-size: 9px;
+    }
+    .hud-team-pip-tooltip {
+        font-size: 10px;
+        padding: 5px 8px;
+    }
+    .hud-team-roster {
+        gap: 4px;
+    }
 }
 .hud-metric-label {
     font-family: var(--ff-archivo);
@@ -1943,10 +2060,6 @@ body {
     background: var(--mustard);
     color: var(--ink);
 }
-.metric-tip .tip-label.climate {
-    background: var(--teal-dark);
-    color: var(--paper);
-}
 .metric-tip strong {
     font-weight: 700;
 }
@@ -1955,6 +2068,10 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 32px;
     width: 100%;
+}
+.metric-tips-row.solo {
+    grid-template-columns: minmax(0, 520px);
+    justify-content: center;
 }
 .intro-people-stack {
     display: grid;

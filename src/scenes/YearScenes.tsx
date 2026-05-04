@@ -328,8 +328,7 @@ export function Y2027ProworkerScene() {
           path: "proworker",
           pathDelta: 2,
           standingDelta: -8,
-          sentimentDelta: -3,
-          notification: "STANDING ↓ AI CLIMATE ↓",
+          notification: "STANDING ↓",
         },
       ]);
       go("y2027proworkerYes");
@@ -339,7 +338,6 @@ export function Y2027ProworkerScene() {
           path: "proworker",
           pathDelta: -1,
           standingDelta: 4,
-          sentimentDelta: 3,
         },
       ]);
       dispatch({

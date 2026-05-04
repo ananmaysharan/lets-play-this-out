@@ -35,7 +35,7 @@ const SCENE_YEAR: Partial<Record<SceneId, number>> = {
   // augmentation ending: 2031..2035
   end_augmentation_1: 2031,
   end_augmentation_2: 2032, end_augmentation_3: 2032, end_augmentation_3b: 2032,
-  end_augmentation_4: 2033, end_augmentation_5: 2033,
+  end_augmentation_4: 2033, end_augmentation_4_ads: 2033, end_augmentation_5: 2033,
   end_augmentation_6: 2034, end_augmentation_7: 2034,
   end_augmentation_final: 2035,
   // erosion
@@ -93,9 +93,6 @@ export function applyEffects(s: GameState, effects: Effect[]): GameState {
     }
     if (typeof e.standingDelta === 'number') {
       next.standing = clamp(next.standing + e.standingDelta);
-    }
-    if (typeof e.sentimentDelta === 'number') {
-      next.aiSentiment = clamp(next.aiSentiment + e.sentimentDelta);
     }
     if (e.teamLoss) {
       next.team[e.teamLoss] = false;
@@ -170,7 +167,6 @@ export function reducer(state: GameState, action: Action): GameState {
       return {
         ...state,
         standing: clamp(state.standing + 8),
-        aiSentiment: clamp(state.aiSentiment - 12),
         proworkerBonusApplied: true,
       };
     case 'RESET':

@@ -1,13 +1,15 @@
 "use client";
 
-import { Crosshair, Smiley, SmileyMeh, Sparkle } from "@phosphor-icons/react";
+import { Smiley, SmileyMeh } from "@phosphor-icons/react";
 import { useGame } from "@/game/GameProvider";
+import { AvatarSprite } from "@/components/AvatarSprite";
+import type { SceneId, TeamMember } from "@/game/types";
 
 interface Props {
   tag?: string;
   /** Override the displayed year (defaults to state.year). */
   year?: number;
-  /** Hide the standing/climate metrics row. */
+  /** Hide the standing/team metrics row. */
   showMetrics?: boolean;
 }
 
@@ -16,6 +18,54 @@ const ICON_PROPS = {
   weight: "regular" as const,
   color: "var(--ink)",
 };
+
+const PRE_TEAM_SCENES: ReadonlySet<SceneId> = new Set<SceneId>([
+  "intro",
+  "avatar",
+  "promotion",
+  "teamIntro",
+]);
+
+interface RosterMember {
+  id: TeamMember;
+  spriteId: string;
+  name: string;
+  role: string;
+}
+
+const ROSTER: RosterMember[] = [
+  { id: "priya", spriteId: "teamPriya", name: "Priya", role: "Jr. Associate" },
+  { id: "samarth", spriteId: "teamSamarth", name: "Samarth", role: "Jr. Associate" },
+  { id: "marcus", spriteId: "teamMarcus", name: "Marcus", role: "Associate" },
+  { id: "jade", spriteId: "teamJade", name: "Jade", role: "Sr. Strategist" },
+  { id: "willow", spriteId: "teamWillow", name: "Willow", role: "Sr. Associate" },
+];
+
+function HudTeamRoster() {
+  const { state } = useGame();
+  return (
+    <div className="hud-team-roster" aria-label="Team roster">
+      {ROSTER.map((m) => {
+        const gone = !state.team[m.id];
+        return (
+          <div
+            key={m.id}
+            className={`hud-team-pip${gone ? " gone" : ""}`}
+            tabIndex={0}
+          >
+            <div className="hud-team-pip-img">
+              <AvatarSprite id={m.spriteId} />
+            </div>
+            <div className="hud-team-pip-name">{m.name}</div>
+            <div className="hud-team-pip-tooltip" role="tooltip">
+              {gone ? `${m.role} · Let go` : m.role}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 export function Hud({ tag = "", year, showMetrics = true }: Props) {
   const { state } = useGame();
@@ -28,15 +78,12 @@ export function Hud({ tag = "", year, showMetrics = true }: Props) {
       : state.standing < 65
         ? "var(--mustard)"
         : "var(--forest)";
-  const climateColor =
-    state.aiSentiment > 75
-      ? "var(--terracotta)"
-      : state.aiSentiment > 25
-        ? "var(--teal)"
-        : "var(--forest)";
 
   const timelineCls =
     `hud-timeline ${y <= 2025 ? "at-start" : ""} ${y >= 2035 ? "at-end" : ""}`.trim();
+
+  const teamIntroduced = !PRE_TEAM_SCENES.has(state.scene);
+  const metricsRowCls = `hud-metrics-row${teamIntroduced ? "" : " solo"}`;
 
   return (
     <div className="hud">
@@ -52,7 +99,7 @@ export function Hud({ tag = "", year, showMetrics = true }: Props) {
       </div>
 
       {showMetrics ? (
-        <div className="hud-metrics-row">
+        <div className={metricsRowCls}>
           <div className="hud-metric">
             <div className="hud-metric-label">
               <span>Company Standing</span>
@@ -72,25 +119,7 @@ export function Hud({ tag = "", year, showMetrics = true }: Props) {
               <Smiley {...ICON_PROPS} />
             </div>
           </div>
-          <div className="hud-metric">
-            <div className="hud-metric-label">
-              <span>AI Climate</span>
-              <span className="hud-metric-pct">{state.aiSentiment}%</span>
-            </div>
-            <div className="hud-metric-bar-row">
-              <Crosshair {...ICON_PROPS} />
-              <div className="hud-bar-track">
-                <div
-                  className="hud-bar-fill"
-                  style={{
-                    width: `${state.aiSentiment}%`,
-                    background: climateColor,
-                  }}
-                />
-              </div>
-              <Sparkle {...ICON_PROPS} />
-            </div>
-          </div>
+          {teamIntroduced ? <HudTeamRoster /> : null}
         </div>
       ) : null}
     </div>

@@ -17,24 +17,16 @@ export function TeamIntroScene() {
       <div className="intro-stage">
         {step === 1 ? (
           <div>
-            <div className="metric-tips-row">
+            <div className="metric-tips-row solo">
               <div className="metric-tip">
                 <span className="tip-label standing">Company Standing</span>
                 <p>
-                  This shows where you stand with your boss and the company.
-                  Keep an eye on this. It will tell you if you might be headed
-                  toward <strong>a promotion or a layoff</strong>!
-                </p>
-              </div>
-              <div className="metric-tip">
-                <span className="tip-label climate">AI Climate</span>
-                <p>
-                  <strong>
-                    Keep an eye on national sentiment toward AI regulation.
-                  </strong>{" "}
-                  AI regulation might affect your day to day! If it is lower,
-                  more people are talking about regulation. Higher value means
-                  less regulation is being discussed!
+                  <strong>2760 Inc.</strong> is one of the hottest marketing
+                  agencies in NYC — but the industry is shifting fast. This
+                  meter tracks where <strong>you</strong> stand with your boss
+                  and the company. Keep an eye on it: it will tell you if
+                  you&apos;re headed toward{" "}
+                  <strong>a promotion or a layoff</strong>.
                 </p>
               </div>
             </div>
