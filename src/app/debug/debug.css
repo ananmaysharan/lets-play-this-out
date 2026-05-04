@@ -1,0 +1,148 @@
+/* Debug scene map — /debug route only. */
+
+.dbg-canvas-root {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background: #0a0a0a;
+  color: #e5e7eb;
+  overflow: hidden;
+}
+
+.dbg-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 10px 16px;
+  background: rgba(10, 10, 10, 0.85);
+  border-bottom: 1px solid #1f2937;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12px;
+}
+
+.dbg-header strong {
+  color: #f97316;
+  letter-spacing: 0.05em;
+}
+
+.dbg-header-hint {
+  color: #6b7280;
+}
+
+.dbg-header-link {
+  margin-left: auto;
+  color: #38bdf8;
+  text-decoration: none;
+}
+.dbg-header-link:hover { text-decoration: underline; }
+
+/* ----- Thumbnail card ----- */
+.dbg-card {
+  width: 360px;
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  user-select: none;
+}
+
+.dbg-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  border-color: #f97316;
+}
+
+.dbg-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 12px 6px;
+  border-bottom: 1px solid #1f2937;
+}
+
+.dbg-title-text {
+  color: #f3f4f6;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.dbg-title-id {
+  color: #6b7280;
+  font-size: 10px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+.dbg-frame {
+  position: relative;
+  overflow: hidden;
+  background: #fdf6e3; /* matches game's paper background */
+}
+
+.dbg-scale {
+  pointer-events: none; /* clicks pass through to .dbg-card */
+}
+
+.dbg-placeholder {
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    #1f2937,
+    #1f2937 10px,
+    #111827 10px,
+    #111827 20px
+  );
+}
+
+/* ----- React Flow theme overrides ----- */
+.react-flow__controls {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.react-flow__controls button {
+  background: #111827;
+  color: #e5e7eb;
+  border-bottom: 1px solid #1f2937;
+}
+.react-flow__controls button:hover {
+  background: #1f2937;
+}
+.react-flow__controls button svg { fill: currentColor; }
+
+.react-flow__minimap {
+  border: 1px solid #1f2937;
+  border-radius: 6px;
+}
+
+.react-flow__attribution {
+  display: none;
+}
+
+/* React Flow scales DOM nodes via transform on the viewport, so our scaled
+   thumbnail content (transform: scale(.225)) composes correctly without
+   double-scaling — the inner pointer-events:none ensures clicks reach the card. */
+
+/* ----- Overlay components in thumbnail mode -----
+   NewsTakeover normally portals to <body> and covers the screen with
+   position:fixed. Inside a thumbnail it renders inline; we override the
+   positioning so it stays inside the thumbnail frame. */
+.news-takeover.is-thumbnail,
+.black-scene.is-thumbnail {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  animation: none;
+}
+

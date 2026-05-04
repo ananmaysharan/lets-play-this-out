@@ -13,7 +13,6 @@ export function PromotionScene() {
     <>
       <Hud tag="DAY ONE" year={2025} />
       <Memo
-        rotate="left"
         headerColor="mustard"
         headerLeft="2760 INC · OFFICIAL"
         headerRight="FROM: LEADERSHIP"
@@ -33,17 +32,17 @@ export function PromotionScene() {
         </p>
         <p>On your first day as manager, a few things to know about the world you&apos;re stepping into:</p>
         <p>
-          <strong>1.</strong> The tools the agency uses are changing <em>fast!</em> Though almost everyone on the team
-          is using AI. Nobody talks about it.
+          <strong>1.</strong> The tools the agency uses are changing <em>fast!</em> Even though almost everyone on the
+          team is using AI, nobody talks about it.
         </p>
         <p>
-          <strong>2.</strong> The industry is watching nervously. Engagement rates across channels are dipping. The
-          cost of producing content has cratered!
+          <strong>2.</strong> Outside of 2760 the industry is also changing rapidly! Engagement rates across tv and web
+          searches are dipping, while the cost of producing content is rising.
         </p>
         <p>But don&apos;t worry about all that right now. Let&apos;s meet your new team…</p>
       </Memo>
       <Btn color="terracotta" className="continue-btn" onClick={() => go('teamIntro')}>
-        → MEET THE TEAM
+        MEET THE TEAM
       </Btn>
     </>
   );

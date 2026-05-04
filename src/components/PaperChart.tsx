@@ -15,9 +15,9 @@ const YEARS = ['2020', '2021', '2022', '2023', '2024'] as const;
 const LABOR_INDEX = [100, 104, 110, 116, 122];
 const AI_INDEX = [100, 55, 30, 16, 9];
 const Y_TICKS = [25, 50, 75, 100];
-/** Headroom above 100 so labor's 122 max doesn't punch through the top. */
-const MAX_SCALE = 130;
-const pct = (n: number) => `${(n / MAX_SCALE) * 100}%`;
+/** Y-axis caps at 100. Bars exceeding 100 (labor 110/116/122) clip at the top. */
+const MAX_SCALE = 100;
+const pct = (n: number) => `${Math.min(100, (n / MAX_SCALE) * 100)}%`;
 
 export function PaperChart() {
   return (

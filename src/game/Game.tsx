@@ -5,7 +5,6 @@ import { useGame } from './GameProvider';
 import type { SceneId } from './types';
 
 import { Notifications } from '@/components/Notifications';
-import { ProgressBar } from '@/components/ProgressBar';
 import { SpriteSheet } from '@/components/SpriteSheet';
 
 import { IntroScene } from '@/scenes/IntroScene';
@@ -48,8 +47,11 @@ import {
 import {
   EndErosion1Scene,
   EndErosion2Scene,
+  EndErosion2AdsScene,
+  EndErosion2QScene,
   EndErosion3Scene,
   EndErosion3bScene,
+  EndErosion3cScene,
   EndErosion4Scene,
   EndErosionFinalScene,
   EndErosionLoseScene,
@@ -76,7 +78,7 @@ import {
   EndProworkerFinalScene,
 } from '@/scenes/endings/ProworkerEnding';
 
-const SCENES: Record<SceneId, ComponentType> = {
+export const SCENES: Record<SceneId, ComponentType> = {
   intro: IntroScene,
   avatar: AvatarScene,
   promotion: PromotionScene,
@@ -123,8 +125,11 @@ const SCENES: Record<SceneId, ComponentType> = {
 
   end_erosion_1: EndErosion1Scene,
   end_erosion_2: EndErosion2Scene,
+  end_erosion_2_ads: EndErosion2AdsScene,
+  end_erosion_2_q: EndErosion2QScene,
   end_erosion_3: EndErosion3Scene,
   end_erosion_3b: EndErosion3bScene,
+  end_erosion_3c: EndErosion3cScene,
   end_erosion_4: EndErosion4Scene,
   end_erosion_lose: EndErosionLoseScene,
   end_erosion_final: EndErosionFinalScene,
@@ -158,7 +163,6 @@ export function Game() {
   return (
     <>
       <SpriteSheet />
-      <ProgressBar />
       <main id="app">
         <div className="page active" key={state.scene}>
           {Scene ? <Scene /> : <p style={{ padding: 40 }}>Page not found: {state.scene}</p>}

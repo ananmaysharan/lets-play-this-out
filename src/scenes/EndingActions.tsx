@@ -1,30 +1,23 @@
 'use client';
 
+import posthog from 'posthog-js';
 import { useGame } from '@/game/GameProvider';
 import { Btn } from '@/components/Btn';
 
 export function EndingActions() {
-  const { state, go, reset } = useGame();
+  const { go, reset } = useGame();
   return (
-    <>
-      <div className="ending-actions">
-        <Btn color="terracotta" onClick={reset}>
-          ↻ PLAY AGAIN
-        </Btn>
-        <Btn color="teal" onClick={() => go('futures')}>
-          ↔ EXPLORE OTHER FUTURES
-        </Btn>
-        <Btn color="forest" onClick={() => go('policies')}>
-          ◆ EXPLORE POLICIES
-        </Btn>
-      </div>
-      <p className="muted center" style={{ fontSize: 11, marginTop: 30, letterSpacing: '0.1em' }}>
-        HEADCOUNT: {state.headcount}/5 · STANDING: {state.standing}% · AI CLIMATE: {state.aiSentiment}%
-      </p>
-      <p className="muted center" style={{ fontSize: 10, marginTop: 10 }}>
-        SOURCES: THE ATLANTIC (2027) · ROTMAN: AI &amp; THE FUTURE OF WORK · HBR
-      </p>
-    </>
+    <div className="ending-actions">
+      <Btn color="terracotta" onClick={() => { posthog.capture('game_replayed'); reset(); }}>
+        ↻ PLAY AGAIN
+      </Btn>
+      <Btn color="teal" onClick={() => { posthog.capture('futures_explored'); go('futures'); }}>
+        ↔ EXPLORE OTHER FUTURES
+      </Btn>
+      <Btn color="forest" onClick={() => { posthog.capture('policies_explored'); go('policies'); }}>
+        ◆ EXPLORE POLICIES
+      </Btn>
+    </div>
   );
 }
 
@@ -32,13 +25,13 @@ export function ProworkerHeroActions() {
   const { go, reset } = useGame();
   return (
     <div className="ending-hero-actions">
-      <Btn color="terracotta" onClick={reset}>
+      <Btn color="terracotta" onClick={() => { posthog.capture('game_replayed'); reset(); }}>
         ↻ PLAY AGAIN
       </Btn>
-      <Btn color="teal" onClick={() => go('futures')}>
-        → EXPLORE OTHER FUTURES
+      <Btn color="teal" onClick={() => { posthog.capture('futures_explored'); go('futures'); }}>
+        EXPLORE OTHER FUTURES
       </Btn>
-      <Btn color="forest" onClick={() => go('policies')}>
+      <Btn color="forest" onClick={() => { posthog.capture('policies_explored'); go('policies'); }}>
         ◆ EXPLORE POLICIES
       </Btn>
     </div>

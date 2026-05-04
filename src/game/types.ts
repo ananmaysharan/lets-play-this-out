@@ -39,8 +39,11 @@ export type SceneId =
   | 'end_augmentation_final'
   | 'end_erosion_1'
   | 'end_erosion_2'
+  | 'end_erosion_2_ads'
+  | 'end_erosion_2_q'
   | 'end_erosion_3'
   | 'end_erosion_3b'
+  | 'end_erosion_3c'
   | 'end_erosion_4'
   | 'end_erosion_lose'
   | 'end_erosion_final'
@@ -77,8 +80,6 @@ export interface Effect {
   sentimentDelta?: number;
   notification?: string;
   teamLoss?: TeamMember;
-  setHeadcount?: number;
-  decHeadcount?: number;
   setProWorkerHeld?: 'yes' | 'no';
 }
 
@@ -92,7 +93,6 @@ export interface GameState {
   scene: SceneId;
   name: string;
   avatar: number; // 1..8
-  headcount: number;
   standing: number; // 0..100
   aiSentiment: number; // 0..100
   year: number;
@@ -110,28 +110,39 @@ export interface GameState {
   followup: { heading: string; body: string; next: SceneId } | null;
   /** Set once when the pro-worker 2031 bonus is applied; prevents re-application after Resume. */
   proworkerBonusApplied: boolean;
+  /** Per-game-run UUID. Used to group analytics events for one play-through; regenerated on RESET. */
+  gameId: string;
 }
 
 export const GAME_LENGTH = 18;
 
-export const INITIAL_STATE: GameState = {
-  scene: 'intro',
-  name: '',
-  avatar: 1,
-  headcount: 5,
-  standing: 50,
-  aiSentiment: 50,
-  year: 2025,
-  path: { augmentation: 0, shrinkage: 0, erosion: 0, proworker: 0 },
-  history: [],
-  endingPath: null,
-  team: { priya: true, samarth: true, marcus: true, jade: true, willow: true },
-  proWorkerHeld: null,
-  policyVote: null,
-  aiDividendVote: null,
-  pagesSeen: 0,
-  aug2032Choice: null,
-  aug2034Choice: null,
-  followup: null,
-  proworkerBonusApplied: false,
-};
+function newGameId(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return `g_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+}
+
+export function createInitialState(): GameState {
+  return {
+    scene: 'intro',
+    name: '',
+    avatar: 1,
+    standing: 50,
+    aiSentiment: 50,
+    year: 2025,
+    path: { augmentation: 0, shrinkage: 0, erosion: 0, proworker: 0 },
+    history: [],
+    endingPath: null,
+    team: { priya: true, samarth: true, marcus: true, jade: true, willow: true },
+    proWorkerHeld: null,
+    policyVote: null,
+    aiDividendVote: null,
+    pagesSeen: 0,
+    aug2032Choice: null,
+    aug2034Choice: null,
+    followup: null,
+    proworkerBonusApplied: false,
+    gameId: newGameId(),
+  };
+}

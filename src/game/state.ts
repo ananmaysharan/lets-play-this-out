@@ -1,10 +1,10 @@
 /* Pure reducer for the game state. */
 
 import {
+  createInitialState,
   type Effect,
   GAME_LENGTH,
   type GameState,
-  INITIAL_STATE,
   type PathKey,
   type SceneId,
   type TeamMember,
@@ -40,7 +40,8 @@ const SCENE_YEAR: Partial<Record<SceneId, number>> = {
   end_augmentation_final: 2035,
   // erosion
   end_erosion_1: 2031, end_erosion_2: 2032,
-  end_erosion_3: 2033, end_erosion_3b: 2033,
+  end_erosion_2_ads: 2032, end_erosion_2_q: 2032,
+  end_erosion_3: 2033, end_erosion_3b: 2033, end_erosion_3c: 2033,
   end_erosion_4: 2034, end_erosion_lose: 2034,
   end_erosion_final: 2035,
   // shrinkage
@@ -74,7 +75,6 @@ export type Action =
   | { type: 'SET_ENDING'; ending: PathKey }
   | { type: 'SET_AUG_CHOICE'; year: 2032 | 2034; choice: 'A' | 'B' }
   | { type: 'TEAM_LOSS'; member: TeamMember }
-  | { type: 'SET_HEADCOUNT'; n: number }
   | { type: 'APPLY_PROWORKER_BONUS' }
   | { type: 'RESET' }
   | { type: 'HYDRATE'; state: GameState };
@@ -97,13 +97,6 @@ export function applyEffects(s: GameState, effects: Effect[]): GameState {
     }
     if (e.teamLoss) {
       next.team[e.teamLoss] = false;
-      next.headcount = Math.max(0, next.headcount - 1);
-    }
-    if (typeof e.setHeadcount === 'number') {
-      next.headcount = e.setHeadcount;
-    }
-    if (typeof e.decHeadcount === 'number') {
-      next.headcount = Math.max(0, next.headcount - e.decHeadcount);
     }
     if (e.setProWorkerHeld) {
       next.proWorkerHeld = e.setProWorkerHeld;
@@ -165,10 +158,7 @@ export function reducer(state: GameState, action: Action): GameState {
       return {
         ...state,
         team: { ...state.team, [action.member]: false },
-        headcount: Math.max(0, state.headcount - 1),
       };
-    case 'SET_HEADCOUNT':
-      return { ...state, headcount: action.n };
     case 'APPLY_PROWORKER_BONUS':
       if (state.proworkerBonusApplied) return state;
       return {
@@ -178,7 +168,7 @@ export function reducer(state: GameState, action: Action): GameState {
         proworkerBonusApplied: true,
       };
     case 'RESET':
-      return { ...INITIAL_STATE };
+      return createInitialState();
     case 'HYDRATE':
       return action.state;
     default:

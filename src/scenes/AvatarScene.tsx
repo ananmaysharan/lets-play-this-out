@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import posthog from 'posthog-js';
 import { useGame } from '@/game/GameProvider';
 import { AvatarSprite } from '@/components/AvatarSprite';
 import { Btn } from '@/components/Btn';
@@ -25,6 +26,7 @@ export function AvatarScene() {
     }
     dispatch({ type: 'SET_NAME', name: v });
     dispatch({ type: 'SET_AVATAR', avatar });
+    posthog.capture('avatar_selected', { avatar_id: avatar, player_name: v });
     go('promotion');
   }
 
@@ -83,7 +85,7 @@ export function AvatarScene() {
         style={{ maxWidth: 240, margin: '18px auto' }}
         onClick={confirm}
       >
-        → ENTER
+        ENTER
       </Btn>
     </div>
   );

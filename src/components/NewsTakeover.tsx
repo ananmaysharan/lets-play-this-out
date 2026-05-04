@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { type CSSProperties, type ReactNode } from 'react';
 import { PixelLogo } from './PixelLogo';
+import { useIsThumbnail } from '@/debug/ThumbnailContext';
 
 const EXIT_MS = 220;
 
@@ -32,6 +33,7 @@ export function NewsTakeover({
   takeoverStyle,
   yearStyle,
 }: Props) {
+  const isThumbnail = useIsThumbnail();
   const [exiting, setExiting] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -43,23 +45,22 @@ export function NewsTakeover({
 
   useEffect(() => {
     setMounted(true);
+    if (isThumbnail) return; // skip global keyboard listener inside thumbnails
     function onKey(e: KeyboardEvent) {
       if (e.key === 'Escape') handleDismiss();
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [handleDismiss]);
+  }, [handleDismiss, isThumbnail]);
 
   if (!mounted || typeof document === 'undefined') return null;
 
-  // Portal to <body> so the fixed-position overlay isn't trapped by any
-  // ancestor with `transform` (e.g. .page during its fadeIn animation).
-  return createPortal(
+  const overlay = (
     <div
-      className={`news-takeover ${exiting ? 'is-exiting' : ''}`}
+      className={`news-takeover ${exiting ? 'is-exiting' : ''} ${isThumbnail ? 'is-thumbnail' : ''}`}
       style={takeoverStyle}
       role="dialog"
-      aria-modal="true"
+      aria-modal={isThumbnail ? undefined : 'true'}
       aria-label={`Breaking news for ${year}`}
     >
       <div className="takeover-year" style={yearStyle}>
@@ -81,11 +82,19 @@ export function NewsTakeover({
         onClick={handleDismiss}
         disabled={exiting}
         aria-disabled={exiting}
-        autoFocus
+        autoFocus={!isThumbnail}
       >
         DISMISS
       </button>
-    </div>,
-    document.body
+    </div>
   );
+
+  // In thumbnail mode, render inline so the overlay is constrained to the
+  // thumbnail frame (which is position:relative + overflow:hidden) instead
+  // of covering the whole page via a portal-to-body.
+  if (isThumbnail) return overlay;
+
+  // Portal to <body> so the fixed-position overlay isn't trapped by any
+  // ancestor with `transform` (e.g. .page during its fadeIn animation).
+  return createPortal(overlay, document.body);
 }

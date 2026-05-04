@@ -11,8 +11,9 @@ import {
   useState,
   type ReactNode,
 } from 'react';
+import posthog from 'posthog-js';
 import { type Action, reducer } from './state';
-import { type GameState, INITIAL_STATE, type SceneId, type Effect } from './types';
+import { createInitialState, type GameState, type SceneId, type Effect } from './types';
 import { clearSave, loadSave, writeSave } from './persistence';
 
 type NotificationItem = { id: number; text: string };
@@ -29,7 +30,7 @@ interface GameContextValue {
   reset: () => void;
 }
 
-const GameContext = createContext<GameContextValue | null>(null);
+export const GameContext = createContext<GameContextValue | null>(null);
 
 export function useGame() {
   const ctx = useContext(GameContext);
@@ -38,7 +39,7 @@ export function useGame() {
 }
 
 export function GameProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+  const [state, dispatch] = useReducer(reducer, undefined, createInitialState);
   const [savedExists, setSavedExists] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
@@ -56,6 +57,14 @@ export function GameProvider({ children }: { children: ReactNode }) {
     if (state.scene === 'intro' && state.pagesSeen === 0) return;
     writeSave(state);
   }, [state, hydrated]);
+
+  // Register the per-run gameId as a PostHog super-property so every captured
+  // event for this play-through is grouped under the same id. Re-runs on
+  // RESET (new uuid) and on resume (uuid loaded from the saved state).
+  useEffect(() => {
+    if (!state.gameId) return;
+    posthog.register({ gameId: state.gameId });
+  }, [state.gameId]);
 
   const go = useCallback((scene: SceneId) => {
     dispatch({ type: 'GO', scene });

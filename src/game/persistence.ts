@@ -1,6 +1,6 @@
 /* localStorage save/resume + forward-compatible migration. */
 
-import { INITIAL_STATE, type GameState } from './types';
+import { createInitialState, type GameState } from './types';
 
 const KEY = 'lets-play-this-out:save:v1';
 const VERSION = 2;
@@ -32,11 +32,12 @@ function migrate(blob: unknown): GameState | null {
       typeof s.followupHtml === 'string' && typeof s.followupNext === 'string'
         ? parseV1Followup(s.followupHtml, s.followupNext as string)
         : null;
+    const base = createInitialState();
     const merged: GameState = {
-      ...INITIAL_STATE,
+      ...base,
       ...(s as Partial<GameState>),
-      path: { ...INITIAL_STATE.path, ...(s.path as Record<string, number> | undefined) },
-      team: { ...INITIAL_STATE.team, ...(s.team as Record<string, boolean> | undefined) },
+      path: { ...base.path, ...(s.path as Record<string, number> | undefined) },
+      team: { ...base.team, ...(s.team as Record<string, boolean> | undefined) },
       followup,
       proworkerBonusApplied: Boolean(s.proworkerBonusApplied ?? false),
     };
@@ -45,11 +46,12 @@ function migrate(blob: unknown): GameState | null {
 
   if (b.v === 2) {
     const s = b.state as Partial<GameState>;
+    const base = createInitialState();
     return {
-      ...INITIAL_STATE,
+      ...base,
       ...s,
-      path: { ...INITIAL_STATE.path, ...(s.path ?? {}) },
-      team: { ...INITIAL_STATE.team, ...(s.team ?? {}) },
+      path: { ...base.path, ...(s.path ?? {}) },
+      team: { ...base.team, ...(s.team ?? {}) },
     };
   }
 

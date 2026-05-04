@@ -10,6 +10,8 @@ interface AlexDialogueProps {
   /** Called once the typewriter completes. */
   onDone?: () => void;
   attribution?: string;
+  /** Optional content rendered inside the speech-stack, below the bubble. */
+  children?: React.ReactNode;
 }
 
 /**
@@ -21,6 +23,7 @@ export function AlexDialogue({
   charDelayMs = 16,
   onDone,
   attribution = 'ALEX · VP',
+  children,
 }: AlexDialogueProps) {
   const { visible, done } = useTypewriter(text, charDelayMs);
 
@@ -43,6 +46,7 @@ export function AlexDialogue({
           <span className="speech-attrib-mini">{attribution}</span>
           <span className="speech-text">{visible}</span>
         </div>
+        {children}
       </div>
     </div>
   );
@@ -59,7 +63,7 @@ interface ContinueLockProps {
 export function LockedContinueBtn({
   unlocked,
   onClick,
-  children = '→ YOUR CALL',
+  children = 'YOUR CALL',
   color = 'terracotta',
 }: ContinueLockProps) {
   const colorClass =
