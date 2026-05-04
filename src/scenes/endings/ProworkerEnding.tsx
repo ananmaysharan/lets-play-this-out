@@ -98,16 +98,16 @@ export function EndProworker3Scene() {
 
       <div className="dialogue-twoway">
         <div className="dialogue-row-pw willow">
-          <div className="pw-bubble tail-right">
-            <span className="pw-attrib willow">WILLOW · SR. ASSOCIATE</span>
-            AI gains should go to everyone, not only to people who managed to
-            keep stable jobs like us!
-          </div>
           <div className="pw-char-stage">
             <div className="pw-char-frame">
               <AvatarSprite id="teamWillow" />
             </div>
             <div className="pw-char-nametag">WILLOW</div>
+          </div>
+          <div className="pw-bubble tail-left">
+            <span className="pw-attrib willow">WILLOW · SR. ASSOCIATE</span>
+            AI gains should go to everyone, not only to people who managed to
+            keep stable jobs like us!
           </div>
         </div>
 
@@ -133,15 +133,6 @@ export function EndProworker3Scene() {
         <strong>Your situation:</strong> You are employed. You would not get the
         full amount.
       </div>
-
-      <a
-        className="blurb-link"
-        href="https://blogs.lse.ac.uk/businessreview/2025/04/29/universal-basic-income-as-a-new-social-contract-for-the-age-of-ai-1/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        LEARN MORE ABOUT UBI &amp; AI
-      </a>
 
       <Btn
         color="teal"
