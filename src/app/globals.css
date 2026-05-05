@@ -504,7 +504,8 @@ body {
     margin: 0 auto;
     image-rendering: pixelated;
     background: var(--paper);
-    object-fit: contain;
+    object-fit: cover;
+    object-position: top center;
 }
 .avatar-card.selected svg,
 .avatar-card.selected img {
@@ -795,13 +796,16 @@ body {
     width: 130px;
     position: relative;
 }
-.team-member svg {
+.team-member svg,
+.team-member img {
     width: 130px;
     height: 168px;
     display: block;
     margin: 0 auto;
     image-rendering: pixelated;
     background: var(--paper);
+    object-fit: cover;
+    object-position: top center;
 }
 .team-name {
     font-size: 12px;
@@ -1106,11 +1110,14 @@ body {
     padding: 10px;
     box-shadow: 4px 4px 0 var(--shadow);
 }
-.alex-frame svg {
+.alex-frame svg,
+.alex-frame img {
     width: 78px;
     height: 78px;
     display: block;
     image-rendering: pixelated;
+    object-fit: cover;
+    object-position: top center;
 }
 .alex-nametag {
     background: var(--ink);
@@ -2121,9 +2128,12 @@ body {
     width: 130px;
     flex-shrink: 0;
 }
-.intro-people-stack .alex-card-portrait svg {
+.intro-people-stack .alex-card-portrait svg,
+.intro-people-stack .alex-card-portrait img {
     width: 130px;
     height: 168px;
+    object-fit: cover;
+    object-position: top center;
 }
 .memo-body.boss-row {
     display: grid !important;
@@ -2152,9 +2162,12 @@ body {
     width: 100%;
     max-width: 130px;
 }
-.team-display-compact .team-member svg {
+.team-display-compact .team-member svg,
+.team-display-compact .team-member img {
     width: 100%;
     height: 156px;
+    object-fit: cover;
+    object-position: top center;
 }
 @media (max-width: 800px) {
     .intro-people-stack {
@@ -2379,13 +2392,17 @@ body {
         linear-gradient(90deg, rgba(26, 26, 26, 0.04) 1px, transparent 1px);
     background-size: 10px 10px;
 }
-.pw-char-frame svg {
+.pw-char-frame svg,
+.pw-char-frame img {
     width: 78px;
     height: 100px;
     display: block;
     image-rendering: pixelated;
+    object-fit: cover;
+    object-position: top center;
 }
-.pw-char-frame.alex-frame svg {
+.pw-char-frame.alex-frame svg,
+.pw-char-frame.alex-frame img {
     width: 78px;
     height: 78px;
 }
@@ -2855,7 +2872,12 @@ body {
         background-size: 20px 20px;
     }
     .avatar-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+    .avatar-card svg,
+    .avatar-card img {
+        height: 96px !important;
     }
     .memo-body {
         padding: 18px 20px;
@@ -2873,17 +2895,27 @@ body {
         font-size: 40px;
     }
     .dialogue-scene {
-        grid-template-columns: 1fr;
-        gap: 14px;
+        grid-template-columns: 84px 1fr;
+        gap: 12px;
     }
     .alex-stage {
-        flex-direction: row;
+        flex-direction: column;
+        align-items: center;
         justify-content: flex-start;
         position: static;
+        gap: 6px;
     }
-    .alex-frame svg {
-        width: 72px;
-        height: 72px;
+    .alex-frame {
+        padding: 6px;
+    }
+    .alex-frame svg,
+    .alex-frame img {
+        width: 64px;
+        height: 64px;
+    }
+    .alex-nametag {
+        font-size: 9px;
+        padding: 3px 6px;
     }
     .speech-bubble::before,
     .speech-bubble::after {
@@ -2897,7 +2929,25 @@ body {
     }
     .dialogue-row-pw.willow,
     .dialogue-row-pw.alex {
-        grid-template-columns: 1fr;
+        grid-template-columns: 84px 1fr;
+        gap: 10px;
+    }
+    .pw-char-frame {
+        padding: 6px;
+    }
+    .pw-char-frame svg,
+    .pw-char-frame img {
+        width: 64px;
+        height: 80px;
+    }
+    .pw-char-frame.alex-frame svg,
+    .pw-char-frame.alex-frame img {
+        width: 64px;
+        height: 64px;
+    }
+    .pw-char-nametag {
+        font-size: 9px;
+        padding: 3px 6px;
     }
     .takeover-notif {
         grid-template-columns: 40px 1fr;
@@ -3797,6 +3847,53 @@ body {
         padding: 16px 8px;
         max-width: 100%;
         overflow-x: auto;
+    }
+}
+
+/* On phones, scale the SVG to fit the viewport instead of horizontal scroll. */
+@media (max-width: 700px) {
+    .futures-diagram {
+        padding: 16px 12px 24px;
+    }
+    .futures-toolbar {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .futures-toolbar .futures-back,
+    .futures-toolbar .path-pill-row {
+        justify-self: center;
+    }
+    .futures-card {
+        padding: 14px 8px;
+        overflow: visible;
+    }
+    .futures-svg-wrap {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100%;
+    }
+    .futures-svg {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100%;
+    }
+    .futures-year-num {
+        font-size: 22px;
+    }
+    .futures-year-decision {
+        font-size: 13px;
+    }
+    .futures-node-letter {
+        font-size: 16px;
+    }
+    .futures-tooltip {
+        position: fixed;
+        left: 12px !important;
+        right: 12px;
+        top: auto !important;
+        bottom: 16px;
+        width: auto !important;
+        max-width: calc(100vw - 24px);
     }
 }
 
