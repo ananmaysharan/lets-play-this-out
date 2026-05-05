@@ -1,6 +1,7 @@
 /* Pure reducer for the game state. */
 
 import {
+  type AvatarConfig,
   createInitialState,
   type Effect,
   GAME_LENGTH,
@@ -66,6 +67,7 @@ export type Action =
   | { type: 'APPLY_EFFECTS'; effects: Effect[]; choice?: { year: number; id: string } }
   | { type: 'SET_NAME'; name: string }
   | { type: 'SET_AVATAR'; avatar: number }
+  | { type: 'SET_AVATAR_CONFIG'; config: AvatarConfig | null }
   | { type: 'SET_YEAR'; year: number }
   | { type: 'SET_FOLLOWUP'; heading: string; body: string; next: SceneId }
   | { type: 'CLEAR_FOLLOWUP' }
@@ -132,6 +134,8 @@ export function reducer(state: GameState, action: Action): GameState {
       return { ...state, name: action.name };
     case 'SET_AVATAR':
       return { ...state, avatar: action.avatar };
+    case 'SET_AVATAR_CONFIG':
+      return { ...state, avatarConfig: action.config };
     case 'SET_YEAR':
       return { ...state, year: action.year };
     case 'SET_FOLLOWUP':

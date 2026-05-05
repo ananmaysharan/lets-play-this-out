@@ -2,6 +2,7 @@
 
 import { useGame } from '@/game/GameProvider';
 import { AvatarSprite } from '@/components/AvatarSprite';
+import { AvatarCanvas } from '@/components/avatar/AvatarCanvas';
 import { Btn } from '@/components/Btn';
 import { Hud } from '@/components/Hud';
 import { Memo } from '@/components/Memo';
@@ -19,10 +20,16 @@ export function PromotionScene() {
         style={{ position: 'relative' }}
       >
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 14 }}>
-          <AvatarSprite
-            id={`avatar${state.avatar}`}
-            style={{ width: 88, height: 114, imageRendering: 'pixelated' }}
-          />
+          {state.avatarConfig ? (
+            <div className="promotion-avatar-tile">
+              <AvatarCanvas config={state.avatarConfig} size={256} />
+            </div>
+          ) : (
+            <AvatarSprite
+              id={`avatar${state.avatar}`}
+              style={{ width: 88, height: 114, imageRendering: 'pixelated' }}
+            />
+          )}
         </div>
         <h1 style={{ textAlign: 'center' }}>Congratulations, {state.name}!</h1>
         <Stamp color="green">PROMOTED</Stamp>

@@ -90,10 +90,21 @@ export interface HistoryEntry {
   scene?: SceneId;
 }
 
+export interface AvatarConfig {
+  skin: number;
+  hair: number;
+  hairColor: number;
+  shirt: number;
+  age: number;
+}
+
 export interface GameState {
   scene: SceneId;
   name: string;
-  avatar: number; // 1..8
+  avatar: number; // legacy 1..8 (still used in some scenes as a fallback)
+  /** Custom-built pixel avatar from the AvatarScene customizer. When present,
+   *  scenes should render this instead of the legacy `avatar` png. */
+  avatarConfig: AvatarConfig | null;
   standing: number; // 0..100
   year: number;
   path: Record<PathKey, number>;
@@ -135,6 +146,7 @@ export function createInitialState(): GameState {
     scene: 'intro',
     name: '',
     avatar: 1,
+    avatarConfig: null,
     standing: 50,
     year: 2025,
     path: { augmentation: 0, shrinkage: 0, erosion: 0, proworker: 0 },
