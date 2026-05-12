@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useIsThumbnail } from "@/debug/ThumbnailContext";
 
 const CELL = 32;
 const ANIM_MS = 2800;
@@ -22,6 +23,7 @@ type Square = {
 };
 
 export function BlinkingSquares() {
+  const isThumbnail = useIsThumbnail();
   const [mounted, setMounted] = useState(false);
   const [squares, setSquares] = useState<Square[]>([]);
   const [grid, setGrid] = useState({ cols: 0, rows: 0 });
@@ -92,6 +94,10 @@ export function BlinkingSquares() {
     };
   }, [grid.cols, grid.rows]);
 
+  // Inside the /debug scene map, skip the full-viewport portal entirely —
+  // the cream-colored .blink-bg is position: fixed and would cover the
+  // whole map.
+  if (isThumbnail) return null;
   if (!mounted) return null;
 
   return createPortal(

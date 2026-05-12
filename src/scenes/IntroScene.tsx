@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import posthog from "posthog-js";
 import { useGame } from "@/game/GameProvider";
 import { BlinkingSquares } from "@/components/BlinkingSquares";
 
 export function IntroScene() {
   const { go, hasSave, resume } = useGame();
+  const [consent, setConsent] = useState(true);
   return (
     <>
       <BlinkingSquares />
@@ -33,6 +35,18 @@ export function IntroScene() {
           ↻ Resume saved game
         </button>
       ) : null}
+      <label className="intro-consent">
+        <input
+          type="checkbox"
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+        />
+        <span>
+          By playing, I agree to share anonymous gameplay data via PostHog
+          to help the team improve this game. No personal information is
+          collected.
+        </span>
+      </label>
       <p className="intro-credits">
         Created by Sophia DeVito · Izzie Mack · Maya Kiernan · Ananmay Sharan
       </p>

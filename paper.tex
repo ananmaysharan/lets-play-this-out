@@ -1,0 +1,405 @@
+%%
+%% This is file `sample-sigconf-authordraft.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% samples.dtx  (with options: `all,proceedings,bibtex,authordraft')
+%%
+%% IMPORTANT NOTICE:
+%%
+%% For the copyright see the source file.
+%%
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from sample-sigconf-authordraft.tex.
+%%
+%% For distribution of the original source see the terms
+%% for copying and modification in the file samples.dtx.
+%%
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+%%
+%%
+%% Commands for TeXCount
+%TC:macro \cite [option:text,text]
+%TC:macro \citep [option:text,text]
+%TC:macro \citet [option:text,text]
+%TC:envir table 0 1
+%TC:envir table* 0 1
+%TC:envir tabular [ignore] word
+%TC:envir displaymath 0 word
+%TC:envir math 0 word
+%TC:envir comment 0 0
+%%
+%% The first command in your LaTeX source must be the \documentclass
+%% command.
+%%
+%% For submission and review of your manuscript please change the
+%% command to \documentclass[manuscript, screen, review]{acmart}.
+%%
+%% When submitting camera ready or to TAPS, please change the command
+%% to \documentclass[sigconf]{acmart} or whichever template is required
+%% for your publication.
+%%
+%%
+\documentclass[sigconf,authordraft]{acmart}
+%% Hiding the
+\settopmatter{printacmref=false}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+%%
+%% \BibTeX command to typeset BibTeX logo in the docs
+\AtBeginDocument{%
+  \providecommand\BibTeX{{%
+    Bib\TeX}}}
+
+%% Rights management information.  This information is sent to you
+%% when you complete the rights form.  These commands have SAMPLE
+%% values in them; it is your responsibility as an author to replace
+%% the commands and values with those provided to you when you
+%% complete the rights form.
+\setcopyright{acmlicensed}
+\copyrightyear{2026}
+\acmYear{2026}
+\acmDOI{XXXXXXX.XXXXXXX}
+%% These commands are for a PROCEEDINGS abstract or paper.
+\acmConference[CS2760]{Make sure to enter the correct
+  conference title from your rights confirmation email}{Spring 2026}{Cambridge, MA}
+%%
+%%  Uncomment \acmBooktitle if the title of the proceedings is different
+%%  from ``Proceedings of ...''!
+%%
+%%\acmBooktitle{Woodstock '18: ACM Symposium on Neural Gaze Detection,
+%%  June 03--05, 2018, Woodstock, NY}
+\acmISBN{978-1-4503-XXXX-X/2018/06}
+
+
+%%
+%% Submission ID.
+%% Use this when submitting an article to a sponsored event. You'll
+%% receive a unique submission ID from the organizers
+%% of the event, and this ID should be used as the parameter to this command.
+%%\acmSubmissionID{123-A56-BU3}
+
+%%
+%% For managing citations, it is recommended to use bibliography
+%% files in BibTeX format.
+%%
+%% You can then either use BibTeX with the ACM-Reference-Format style,
+%% or BibLaTeX with the acmnumeric or acmauthoryear sytles, that include
+%% support for advanced citation of software artefact from the
+%% biblatex-software package, also separately available on CTAN.
+%%
+%% Look at the sample-*-biblatex.tex files for templates showcasing
+%% the biblatex styles.
+%%
+
+%%
+%% The majority of ACM publications use numbered citations and
+%% references.  The command \citestyle{authoryear} switches to the
+%% "author year" style.
+%%
+%% If you are preparing content for an event
+%% sponsored by ACM SIGGRAPH, you must use the "author year" style of
+%% citations and references.
+%% Uncommenting
+%% the next command will enable that style.
+%%\citestyle{acmauthoryear}
+
+
+%%
+%% end of the preamble, start of the body of the document source.
+\begin{document}
+
+%%
+%% The "title" command has an optional parameter,
+%% allowing the author to define a "short title" to be used in page headers.
+\title{Let's Play This Out: The Future of AI and Work}
+
+%%
+%% The "author" command and its associated commands are used to define
+%% the authors and their affiliations.
+%% Of note is the shared affiliation of the first two authors, and the
+%% "authornote" and "authornotemark" commands
+%% used to denote shared contribution to the research.
+\author{Sophia Devito}
+\affiliation{%
+  \institution{Harvard University}
+  \city{Boston}
+  \state{MA}
+  \country{USA}
+}
+\email{sophia\_devito@mde.harvard.edu}
+
+
+\author{Maya Kiernan}
+\affiliation{%
+  \institution{Harvard University}
+  \city{Boston}
+  \state{MA}
+  \country{USA}
+}
+\email{maya\_kiernan@mde.harvard.edu}
+
+\author{Ananmay Sharan}
+\affiliation{%
+  \institution{Harvard University}
+  \city{Boston}
+  \state{MA}
+  \country{USA}
+}
+\email{ananmay\_sharan@mde.harvard.edu}
+
+
+\author{Isidora Mack}
+\affiliation{%
+  \institution{Harvard University}
+  \city{Boston}
+  \state{MA}
+  \country{USA}
+}
+\email{izzie\_mack@mde.harvard.edu}
+
+
+
+%%
+%% By default, the full list of authors will be used in the page
+%% headers. Often, this list is too long, and will overlap
+%% other information printed in the page headers. This command allows
+%% the author to define a more concise list
+%% of authors' names for this purpose.
+\renewcommand{\shortauthors}{DeVito, Kiernan, Sharan, Mack}
+
+%%
+%% The abstract is a short summary of the work to be presented in the
+%% article.
+\begin{abstract}
+  Public discourse on AI and work tends toward extremes — either catastrophic predictions of mass unemployment or confident reassurances of stability — leaving most people without a useful framework for understanding the more gradual, uneven workplace changes the research literature actually describes. This paper presents the design of an interactive browser-based scenario game that places players in the role of a manager navigating AI integration decisions between 2025 and 2035. Drawing on speculative design, procedural rhetoric, and role-play simulation research, the game uses branching decision pathways to surface four plausible futures for AI and work: augmentation, job erosion, selective shrinkage, and pro-worker redesign. Rather than forecasting a single outcome, the game invites players to experience how seemingly routine managerial choices can compound into larger consequences for worker autonomy, job quality, and labor market structure — consequences shaped not only by individual decisions, but by economic and political forces that require collective response. Our primary target users are college students and early-career adults, a population with high personal stakes in AI's impacts on work but low civic engagement around the policy questions that will shape them. We argue that interactive, narrative-driven scenario tools occupy an underexplored position between institutional forecasting and public engagement, and we describe an evaluation framework for assessing whether the game meaningfully shifts players' orientation toward civic participation on AI and labor policy.
+\end{abstract}
+
+%%
+%% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.
+%% Please copy and paste the code instead of the example below.
+%%
+\begin{CCSXML}
+<ccs2012>
+   <concept>
+       <concept_id>10003120.10003121.10003126</concept_id>
+       <concept_desc>Human-centered computing~HCI theory, concepts and models</concept_desc>
+       <concept_significance>500</concept_significance>
+       </concept>
+ </ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Human-centered computing~HCI theory, concepts and models}
+
+
+
+
+
+\received{20 February 2007}
+\received[revised]{12 March 2009}
+\received[accepted]{5 June 2009}
+
+%%
+%% This command processes the author and affiliation and title
+%% information and builds the first part of the formatted document.
+\maketitle
+
+\begingroup
+\small
+\noindent\textbf{Submission notes.}\\
+\textbf{Graduating in May:} No one on the team is graduating this May.\\
+\textbf{Intended contribution:} Primarily a real-world contribution, but aiming to draw substantively on academic concepts.\\
+\textbf{Feedback focus:} We received a small grant from the Berkman Klein Center to extend this work into a more widely distributed and experienced version, and would especially welcome feedback that helps inform that extension.
+\endgroup
+\vspace{0.5em}
+
+%%Hacky but removes extra space
+\section{Introduction}
+
+Within HCI, recent scholarship argues that visions of the future are often implicit, techno-deterministic, and narrow, with insufficient attention to uncertainty and broader societal consequences. Sanchez et al.~\cite{sanchez2025talk} call for richer future-oriented work in HCI that better engages social, ethical, and environmental dimensions of technological change. Our project responds to that call by using an interactive browser-based scenario game to make AI workplace futures concrete at the level of everyday managerial decision-making.
+
+
+\subsection{Problem Framing}
+
+
+AI's impact on work is still largely discussed in abstract policy language or narrow corporate terms, leaving the public with few meaningful ways to engage in the tradeoffs between augmentation, replacement, and deployment. However, these choices will shape not only economic outcomes, but also emotional well-being, social stability, and public life more broadly. If large-scale disruption is a credible possibility, decision-making should not remain confined to a small group of corporate actors and policymakers. The problem is that we still lack accessible ways for the public to understand possible futures, weigh tradeoffs, and build political will.
+
+We hope to enable a discourse around potential mitigation or policies such as labor protections, income supports, or other large-scale social responses, and those that protect people's social and emotional health, as well as empower people towards civic engagement around these issues.
+
+%%CAN WE CUT THIS?
+Testifying to Congress in 2023, economist Dr. Anton Korinek said, ``we need to prepare for a range of possibilities through robust scenario planning.'' Yet these scenarios and planning still rarely reach a public that is eager for them.
+
+
+\subsection{Civic Engagement}
+
+% Decisions about how AI is adopted at work will not be made by any single actor, but they will be shaped by the degree to which workers, citizens, and young people understand what is at stake and feel empowered to act.
+Research has indicated that engaging the public early in technology development cycles helps align innovation with societal needs and improves how potential harms are mitigated~\cite{oecd2024trust}. Without meaningful civic participation, AI governance risks being captured by a narrow set of institutional and corporate actors whose interests do not always align with those of the broader workforce.
+
+This is an urgent problem. About half of U.S. workers say they feel worried about how AI may be used in the workplace in the future, while only about a third say they feel hopeful~\cite{pew2025workers}. Among younger workers, the anxiety is especially pronounced: 40\% of workers ages 18 to 29 say they feel overwhelmed by the prospect of AI in the workplace, the highest share of any age group~\cite{pew2025workers}. Meanwhile, only 11\% of the general public says they are more excited than concerned about AI's increased use in daily life, compared to 47\% of AI experts — a gap that reflects not simply a failure of communication, but a real asymmetry in who has access to the information and institutional leverage needed to shape how these technologies are deployed~\cite{pew2025experts}.
+
+Yet anxiety has not translated into genuine engagement. Public discourse about AI and work tends toward extremes — either confident reassurance from industry voices or catastrophic predictions of mass unemployment — leaving most people without a useful framework for understanding the more gradual and uneven changes the research literature actually describes. AI's opacity, mutability, and resource requirements impede meaningful civic engagement, making it difficult for ordinary people to participate in decisions that will directly affect their working lives~\cite{sieber2025civic}. At the federal level, Congress has not passed broad AI labor legislation, and recent proposals have emphasized voluntary guidelines and agency oversight rather than comprehensive regulation, leaving large gaps in worker transition planning that civic pressure could help fill~\cite{crs2025federal}.
+
+What is missing is not concern — that is clearly present — but legibility: accessible, concrete ways for people to understand what the stakes actually are, and to see themselves as having a meaningful role in shaping the outcome.
+
+
+\subsection{Motivation}
+
+Research suggests that AI is likely to reshape work tasks and drive occupational transitions in the coming decade, but public discourse tends to focus on extreme scenarios of full automation rather than the more subtle and common realities of task creep, increased monitoring, and shifting job expectations \cite{acemoglu2022tasks} \cite{acemoglu2025simple}.
+
+Making these dynamics legible could create room for more ethical AI implementation. We want to help people better understand the potential benefits, changes, and risks of an AI-mediated workplace. We can also begin to understand how scenario planning might make certain groups of people more or less inclined to engage with AI policy or conversations today, thus better informing outreach and public engagement going forward.
+
+As organizations rapidly integrate AI into everyday workflows, many decisions about automation are framed primarily in terms of efficiency, speed, and cost reduction. This framing can obscure the downstream impact on workers: tasks may shift rather than disappear, new forms of monitoring and invisible labor emerge, and the risks of displacement or deskilling often unfold gradually and unevenly \cite{acemoglu2022tasks} \cite{acemoglu2025simple}. As a result, important questions are frequently skipped in product and policy decisions: What work is being removed versus transformed? Who absorbs the new burdens created by AI systems? And how might small design and deployment choices compound into large labor market effects over time? This project aims to investigate the gap between localized AI integration decisions and the broader consequences for workers.
+
+
+
+
+
+\section{Background}
+
+
+\subsection{AI \& Work}
+
+
+Artificial intelligence is already changing how work is structured, monitored, and experienced, but public discourse about these changes tends to oscillate between apocalyptic predictions of mass unemployment and reassurances around job markets remaining stable. Reality is more uneven and harder to see. Recent task-based analysis suggests that AI does not eliminate occupations so much as it reorganizes the tasks within them. Eloundou et al.~\cite{eloundou2024gpts} estimate that around 80\% of the U.S. workforce could have at least 10\% of their tasks affected by large language models, a figure that climbs when complementary tools are considered.
+
+Acemoglu and Restrepo \cite{acemoglu2022tasks} document how earlier waves of automation have already hollowed out middle-skill work and widened wage inequality in the United States, and Acemoglu \cite{acemoglu2025simple} warns that without deliberate intervention, AI risks accelerating this pattern. Early empirical evidence suggests that, despite rapid adoption of tools such as ChatGPT, measurable labor market effects remain small so far, but adoption is unequal in ways that can compound existing disparities \cite{humlum2025llm}.
+
+A consistent finding across this literature is that AI product development overwhelmingly focuses on automation over augmentation. Constantinides and Quercia \cite{constantinides2025ai} show this empirically in AI patents filed in the past decade: the vast majority target task replacement rather than supporting human capabilities. Acemoglu, Autor, and Johnson \cite{acemoglu2023proworker} make a related argument that achieving "pro-worker AI" would require restructuring the economic incentives that currently reward labor displacement, including tax policy, corporate governance, and public investment in new task creation. This tension between automation and augmentation is central to our project.
+
+If we succeed, this project could help shift AI and labor discourse from abstraction to public understanding and action. By making possible futures of work more vivid, personal, and interactive, we hope to increase people's ability to recognize the stakes of AI deployment not only for productivity and wages, but for dignity, agency, emotional well-being, and social stability. This could foster greater civic engagement around current labor and AI policy debate, while also encouraging workers and decision-makers to think more critically about how AI is being adopted in their own workplaces.
+
+In addition, we hope this project could be an indicator for future research on whether interactive scenario planning is a more effective medium than traditional economic reports or forecasts to help people engage substantively with emerging technology policy.
+
+\subsection{Speculative Futures}
+
+Within HCI, speculative design has become an important approach for making abstract technological futures tangible and discussable. Rather than predicting a single outcome, these methods help participants "recognize, consider and reflect on the uncertainties they are likely to face" \cite{varum2010scenarios}.
+
+Barnett et al. \cite{barnett2025scenarios} describe future scenarios as structured narratives that help stakeholders consider technological adoption, potential consequences, and tradeoffs across different pathways of development. Scenario methods can also surface potential risks and benefits before technologies become entrenched \cite{brey2017ethics}, making them useful for emerging technologies such as AI, whose social and economic implications remain unsettled.
+
+Scenario methods themselves can take several forms. Börjeson et al. \cite{borjeson2006scenario} distinguish between predictive, normative, and explorative scenarios. Predictive scenarios attempt to forecast what is likely to happen, while normative scenarios describe futures aligned with particular goals. Explorative scenarios instead ask "what can happen?" This project draws most directly on explorative scenarios. Rather than attempting to forecast a single future of AI and labor, we present a range of plausible workplace transformations and invite participants to consider their implications.
+
+
+\subsection{Role-play, Decision-Making, \& Perspective-Taking}
+
+
+The speculative framing we have chosen raises a practical question: how should participants encounter these futures? Rattay et al. \cite{rattay2023sensing} introduce speculative role-play workshops as a way to help participants engage with complex socio-technical futures, demonstrating that placing people inside a speculative scenario, rather than simply presenting one to them, can deepen engagement with its implications. Role-play is useful because it places participants inside a decision context. Rather than reading about a future from the outside, participants must make choices from within a role, under specific constraints. Alejandro et al. \cite{alejandro2024roleplay} describe role-play simulations as a promising method to engage with complex problems because they allow participants to work through uncertainty, competing interests, and institutional tensions in a situated way.
+
+Winardy and Septiana~\cite{winardy2023roleplay} argue that role-play and role-playing games can support transformative learning by allowing participants to act through patterned situations and experience the consequences of behavior. A role-play format allows us to test whether placing players in a decision-making role can help them understand how seemingly small choices may lead to downstream effects on autonomy, job quality, and employment.
+
+
+\subsection{Gameplay}
+
+Understanding how games can shape perspectives on the future of AI and labor requires first examining their unique ability to communicate complex systems. Bogost \cite{bogost2007persuasive} defines procedural rhetoric as the way games persuade through rule-based representations and interactions, as opposed to spoken or written argumentation. Rather than explicitly telling players what to think, games allow them to interact directly with the underlying logic of a system. Applied to AI and work, this means players can develop a more nuanced, functional understanding of AI's potential impact, moving beyond abstract anxiety. This is further supported by Flanagan's \cite{flanagan2009critical} concept of critical play, which frames games as sites for examining, questioning, and reexamining social and cultural values through the act of play.
+
+The universality and pedagogical power of games as a medium lies in their ability to foster experience-taking, the imaginative process of assuming a character's identity and simulating their internal goals \cite{kaufman2012experience}. Research by Belman and Flanagan \cite{belman2010empathy} indicates that the best way to cultivate empathy through a game is to provide players with a sense of agency within a specific social context, as opposed to passively exposing them to another perspective. Isbister \cite{isbister2016games} reinforces this, arguing that deliberately designed games can produce greater emotional responses and social insight than other media. This is further supported by Kolek et al. \cite{kolek2024video}, whose work demonstrates that empathy-driven games can meaningfully shift attitudes and behaviors across diverse demographic groups.
+
+Games also offer a unique opportunity for the speculative futuring discussed in the previous section, since they can provide a space for players to examine complex problems that lack a clear solution. Because games are inherently interactive, they can function as what Bogost \cite{bogost2007persuasive} would call procedural representations of speculative futures: systems that players can inhabit and test rather than simply read about. Multiple, branching futures can be presented to the player, moving their perception away from a binary towards a more nuanced understanding of possible futures. By grounding speculative futures and role-play in an empathy-building, interactive medium, games offer a compelling entry point for the kind of thoughtful public deliberation that the governance of AI and labor will ultimately require.
+
+
+\subsection{Prior Attempts \& State of Knowledge}
+
+Several projects have attempted to make AI and labor futures more legible to broader audiences, though they are not directed towards the civic engagement goals this project pursues. Large-scale labor and skills reports from organizations such as the World Economic Forum, the OECD, and the International Labour Organization provide rigorous analyses of occupational transitions and skill demands, but these are oriented toward expert audiences rather than the general public.
+
+More interactive initiatives have tried to lower this barrier. Public forecasting tools like "Map of AI Futures" and scenario projects such as "AI 2027" attempt to visualize possible technological trajectories in more accessible formats \cite{ai2027}. "AI 2027" in particular gained notable public traction, suggesting a genuine appetite for concrete, narrative-driven engagement with these questions. However, even these efforts tend to remain at the level of macro-level forecasting — describing systemic shifts rather than helping individuals understand how those shifts might feel like, or what tradeoffs they would actually require of real people in real roles.
+
+Within HCI and design research, a small but growing body of speculative work has begun to engage AI and work futures at a more human scale. Cheon and Khovanskaya \cite{cheon2024amazon} use speculative design to probe alternative futures for labor-intensive, highly monitored workplaces, and Ma et al. \cite{ma2025speculative} similarly use design fiction to surface alternative possibilities for gig workers facing automation. These projects are methodologically closer to our own in their use of speculation as a critical tool, but they are primarily aimed at researchers and designers rather than the general public, and they do not attempt to build transferable civic engagement or political will around work and AI policy.
+
+What remains largely absent is an attempt that combines the empirical rigor of institutional forecasting, the human-scale perspective of labor experience research, and the accessibility and emotional resonance of interactive public-facing formats such as games. Our project sits at this intersection, using a designed scenario to make AI workplace futures concrete at the level of everyday decision-making, while drawing on evidence that interactive, narrative-driven formats can shift attitudes and build empathy across diverse populations~\cite{kolek2024video, cross2025path}.
+
+
+
+\section{Users and Design Rationale}
+
+
+\subsection{Target Users}
+
+Our primary users are college students and early-career adults in the United States, particularly those in fields like marketing, business, communications, and other white-collar roles where AI adoption is already substantial. In addition, these roles are often considered "high-coverage", in that many of their tasks could potentially be accomplished by a sufficiently advanced AI system \cite{mckinsey2025state}. These are people with significant personal stakes in how AI reshapes work over the next decade — yet who today are rarely included in the policy conversations that will shape it.
+
+This audience is also a practical choice. Early-career workers are comfortable with browser-based interactive tools and are at a moment when their understanding of work, institutions, and collective action is still being formed, making them especially receptive to perspective-shifting experiences. Many will soon face AI adoption decisions themselves, both as workers navigating new tools and as managers making choices that affect others.
+
+\subsection{Use Scenarios}
+
+A typical use scenario involves a young professional playing the game over 20 to 30 minutes, either intentionally or after coming across it through a link online or in a newsletter. They step into the role of a manager navigating AI integration decisions and begin to recognize familiar workplace dynamics such as task monitoring, shifting expectations, and the feeling that something is changing without clear language for it. Rather than telling them what the right answer is, the game helps them build a more grounded picture of how AI may shape work over longer time horizons, how choices that seem beneficial in the short term may create harmful long-term effects, and what kinds of collective or policy responses could lead to better futures for their industry and their own career.
+
+A second scenario involves the game being used in a classroom or campus setting, where students play individually and then debrief together. Here, the game functions as a shared reference point — a concrete, experiential basis for discussing questions that are otherwise hard to make real: Who benefits from AI adoption? Who absorbs the costs? What would a more pro-worker outcome actually require?
+
+Across all these scenarios, a successful interaction is one where a player finishes with a stronger sense that AI's  impacts on work are political and social issues they can have a voice in, not just market forces they must accept.
+
+
+\subsection{Industry Focus and Time Frame}
+
+We have chosen to begin with a project focused on \textbf{marketing} because it is a common white-collar career path in the United States and one in which AI adoption is already substantial. Marketing is also a useful starting point because it appears to be among the business functions seeing some of the clearest reported gains from AI, while still retaining fewer professional regulations than fields such as law or medicine, making it easier to model broader white-collar dynamics \cite{mckinsey2025state}. We also note that occupations in the upper middle of the earnings distribution appear especially exposed to AI-related task change, making marketing a useful proxy for modeling broader professional impacts across white-collar work \cite{acemoglu2026building}.
+
+We focus on the period from 2025 through 2035 because it is close enough to current adoption patterns to remain grounded, while still allowing organizational and policy choices to compound over time. Rather than modeling a distant or fully speculative "artificial general intelligence (AGI)" horizon, this time frame allows the game to focus on nearer-term workplace impacts already visible across hiring, task structure, supervision, and training \cite{oecd2023employment, eloundou2024gpts}.
+
+
+\section{System Design and Implementation}
+
+\subsection{Four Plausible Futures}
+
+Our tool, like other forecasting and foresight methods, asks not which single future is most likely, but how we should prepare for a range of plausible futures. Given this aim, we draw from current discourse and labor market literature to synthesize four broad possibilities for AI's impact on work: \textbf{augmentation}, in which jobs remain and tasks become faster and more system-mediated; \textbf{job erosion}, in which jobs remain but autonomy, pay, and work quality deteriorate; \textbf{selective shrinkage}, in which the occupation persists but routine or entry-level layers contract; and \textbf{pro-worker redesign}, in which AI is deliberately steered toward complementing labor, creating new human tasks, and increasing the value of expertise~\cite{acemoglu2026building, acemoglu2019automation, oecd2023employment, rogers2023data}.
+
+\textbf{Augmentation} refers to a future in which AI primarily acts as a co-pilot: jobs remain, task bundles shift, and workers spend more time directing, reviewing, and making decisions with AI support rather than being displaced outright. This future is closest to labor-augmenting and some capital-augmenting pathways in Acemoglu, Autor, and Johnson's framework, and it also resonates with Brynjolfsson's argument that the most socially valuable AI is not human imitation but human complementarity, as well as with Autor's "mass expertise" thesis that AI can extend expert judgment to a broader set of workers rather than simply routing around them~\cite{acemoglu2019automation, brynjolfsson2022turing, autor2024applying, malone2018superminds, markoff2015machines}. In practical terms, augmentation is the least disruptive path: work becomes faster and more supervisory of systems, but professional autonomy and the basic occupational structure  remain intact. This also reflects a common public view that AI may accelerate work without fundamentally transforming most occupations.
+
+\textbf{Job erosion} refers to a future in which jobs remain but deteriorate in quality as AI is used to intensify work, increase monitoring, flatten wages, and reduce discretion even without mass layoffs. This future is supported by Acemoglu and Restrepo's warning about "so-so automation," OECD findings that AI's near-term effects are likely to appear more clearly in job quality than job quantity, and a wider organizational literature on algorithmic control, technostress, and workplace surveillance showing how data systems can speed up work while hollowing out autonomy~\cite{acemoglu2019automation, acemoglu2022tasks, oecd2023employment, kellogg2020algorithms, tarafdar2007technostress, dubal2023algorithmic, mateescu2019algorithmic, rogers2023data}. In this scenario, tasks inside the job are reorganized in ways that require less scarce expertise and therefore justify weaker pay growth, tighter control, and less professional autonomy. The title survives, but the substance of the role changes: workers become reviewers of machine output under tighter performance metrics, with more cognitive overload, less control, and a growing sense that managers and owners are capturing the benefits while workers are asked to do more for less.
+
+\textbf{Selective shrinkage} refers to a future in which the occupation survives, but fewer workers are needed because AI absorbs routine, first-pass, or standardized tasks that once belonged to junior and support roles. The workers who remain may still be relatively well positioned, but the career pathway becomes narrower and more fragile over time~\cite{acemoglu2026building, acemoglu2019automation, acemoglu2022tasks}. This would likely mean not the disappearance of the occupation, but a contraction of its junior and production-heavy layers: firms may still employ strategists, client leads, and senior brand decision makers, but hire fewer copywriters, coordinators, analysts, and freelancers because generative AI can absorb much of the first-pass work that once justified those roles and trained the next generation. As a result, some displaced workers may move into adjacent roles or industries, but others, especially those coming from weakened entry pipelines or weaker labor markets, are more likely to face underemployment, downward mobility, or difficulty re-entering comparable work~\cite{acemoglu2026building, acemoglu2019automation, rogers2023data}.
+
+\textbf{Pro-worker redesign} refers to a future in which AI is intentionally deployed in ways that increase the value of human expertise, create new human tasks, and preserve worker agency through stronger governance, training, and worker voice. This future is grounded most directly in Acemoglu, Autor, and Johnson's claim that only new task-creating technologies are unambiguously pro-worker, and it is reinforced by Autor's argument that AI can rebuild stronger middle-skill work by extending human judgment, by OECD work on social dialogue and trustworthy workplace AI, and by broader arguments for augmentation over imitation~\cite{acemoglu2026building, autor2024applying, oecd2023employment}. In its lighter version, this future means redesigned jobs and stronger internal governance; in its stronger version, it can also include broader public interventions such as paid transition support, reduced work time, more active distribution of productivity gains, or universal basic income (UBI).
+
+These four futures are largely shaped by industry conditions and institutional pressure, and the individual is only partially able to influence them. While players make practical managerial choices about how AI is used, evaluated, and governed inside the workplace, those decisions unfold within larger economic and political forces they cannot fully control. This structure reflects the broader literature showing that AI's labor effects depend not only on capability, but on policy, incentives, and governance, and it is meant to increase civic engagement by helping users see that a more pro-worker future will not emerge from better tools alone, but from collective pressure over how those tools are designed, deployed, and regulated~\cite{acemoglu2026building, acemoglu2019automation, acemoglu2022tasks, oecd2023employment}. It also builds on arguments that democratic societies can shape how AI's gains are distributed through legislation, redistribution, and other public choices, even if individuals cannot opt out of the larger transition.
+
+
+\subsection{Decision Tree and Implementation}
+
+The game maps a single industry pathway from 2025 to 2035. After a shared opening that introduces the player to their team and to Alex, the player's manager, the game presents five yearly decisions from 2025 through 2029. Each decision is staged as a brief news beat, a short context scene, and a multiple-choice prompt, and the same five decisions appear on every playthrough; what differs is the option the player selects. Each option silently increments one or two of four hidden path counters corresponding to the four plausible futures described above. Two variables are visible: the player's standing with their manager and the team members status. These shift in response to choices, but do not by themselves determine the ending; they are surfaced so that the social and political texture of each choice is felt rather than abstracted.
+
+The ending selection is resolved at the 2030 ballot on the imagined  "AI Job Preservation and Work Sharing Act" bill. A \textsc{for} vote always passes the bill, an \textsc{against} vote always defeats it, and an \textsc{abstain} vote passes only if the player's augmentation and pro-worker counters together exceed the shrinkage and erosion counters. The winning side of the ballot then selects the ending by comparing the two counters on that side. A small reproducible perturbation (approximately 15\% of possible playthroughs) occasionally flips the ending to its sibling on the same side, so that runs landing near the boundary can experience either outcome. From 2031 to 2035 each ending carries its own narrative arc, several of which include additional sub-decisions, and the game closes on a results screen that visualizes the player's full path through the decision tree as well as a description of the future they ended in and the sources it draws from. From that screen, players can also open a short policies appendix surfacing five concrete real-world levers: work-sharing legislation, an AI dividend, human-in-the-loop standards, portable retraining accounts, and workplace metric transparency. Each is drawn from the AI and work policy research reviewed above, so that the player's in-game outcome connects directly to the civic and policy questions they could then engage with outside the game.
+
+The game is built as a browser-based interactive experience with an illustrative, pixel-art visual style rather than a photorealistic one, drawing on the tradition of narrative games that use stylized, atmospheric artwork to carry serious subject matter. Our reference points include games which use a deliberately constrained visual style to create moral weight through bureaucratic decisions, and web-based interactive experiences like the \textit{Financial Times} Climate Game and Nicky Case's \textit{The Evolution of Trust}. We aimed for a visual register that signals ``this is a game'' immediately upon loading, priming players toward the role-play engagement described above, while remaining achievable within our team's capacity and timeline.
+
+The application is built in Next.js and React with TypeScript. The results-screen tree visualization is a custom SVG view that reads from the same decision-graph data structure used during play. The game is deployed as a static site and is shareable via a single URL, which supports our goal of broad public accessibility.
+
+\section{Discussion}
+
+\subsection{Early Findings}
+
+Data was collected through PostHog, an open-source product analytics platform embedded in the game client. No identifying information was requested or collected. We assigned each browser session an anonymous distinct ID, and recorded a small set of gameplay events (\texttt{game\_started}, \texttt{avatar\_selected}, \texttt{decision\_made}, \texttt{proworker\_stance\_chosen}, \texttt{policy\_voted}, and \texttt{ending\_reached}) along with the choice each player made at branch points. The reporting window covers May 1 through May 10, 2026.
+
+Across that window, 40 unique players started 88 sessions. About 90\% of starters (36 players) made it past the intro and avatar selection, and about 74\% (29 players) reached at least one of the four endings. Run-throughs totaled 46, since some players finished more than once and arrived at different endings on different attempts. The distribution across the four pathways was uneven: about 52\% of completed runs ended in Augmentation, 30\% in Pro-Worker Redesign, 11\% in Selective Shrinkage, and 7\% in Job Erosion. The two outcomes that involve clear worker harm (Erosion and Shrinkage) together made up roughly 18\% of completed runs. Because the game's branch routing mixes player choices with some designed randomness in the routing logic, this distribution should not be read as a direct mapping of player intent, but the majority of playthroughs did end on a path where workers retain more agency.
+
+Both in-game ballots produced lopsided results. The AI Job Preservation and Work Sharing Act, which appears in 2030 on every path, drew 42 votes: about 81\% in favor, about 17\% against, and one abstention (about 2\%). All seven against votes came from players whose runs ended in Job Erosion or Selective Shrinkage; players on the two pro-worker paths voted yes in every case except the single abstention. The AI Dividend Act in 2032, which only surfaces on the pro-worker path, received 14 votes, all of them yes, even though the in-game framing tells employed players they would receive a smaller share of the proceeds. The sample is small and self-selected toward people willing to spend 20 to 30 minutes on a scenario about AI and labor, but among those who did finish, support for labor protections and for redistributive AI policy was close to unanimous.
+
+\subsection{Future Work}
+
+In further development of our project, we would hope to more concretely assess two things: players' experience of the game, and whether the experience shifted their orientation toward civic engagement on AI and work issues. The first set of questions will ask about clarity, pacing, emotional resonance, and whether the decision points felt meaningful. The second set will ask whether players feel more informed about AI's potential labor impacts, whether they are more inclined to seek out information about AI and work policy, and whether they are more likely to take specific civic actions (contacting representatives, supporting labor organizations, discussing these issues with colleagues or peers). This questionnaire is intended both as a formative evaluation tool for improving the game's design and as early groundwork for a potential study on whether interactive scenario planning can meaningfully increase public engagement with technology policy.
+
+% TODO: write Discussion section. Limitations of the playtest sample (small N, self-selected)?
+
+
+\section{Conclusion}
+
+% TODO: write Conclusion section.
+
+
+\begin{acks}
+Thank you to Professor Gajos and our TA Jianna for being such great resources!
+\end{acks}
+
+
+
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\appendix
+
+
+
+\end{document}
+\endinput
+%%
+%% End of file `sample-sigconf-authordraft.tex'.

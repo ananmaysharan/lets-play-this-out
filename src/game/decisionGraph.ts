@@ -806,7 +806,7 @@ const PROWORKER_BRANCH: YearDecision[] = [
       {
         id: "→",
         title: "CONTINUE",
-        description: "Your team of five made it through.",
+        description: "Your team made it through.",
         color: "forest",
         primaryPath: "proworker",
         effects: [],

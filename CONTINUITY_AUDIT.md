@@ -15,7 +15,7 @@ On a pure C run the player has spent four years insisting "AI doesn't have to el
 
 ---
 
-### 2. "Your team of five has made it through a chaotic 9 years" — almost never true
+### 2. "You and your team has made it through a chaotic 9 years" — almost never true
 **File:** `src/scenes/endings/ProworkerEnding.tsx:374`
 
 Hardcoded. On the canonical C/C/C-hold/C/C path, 2029C removes Marcus and Priya, so the team is actually 3 (Samarth + Jade + Willow). Even worse on wobble paths (player who fired Samarth in 2027B + lost Jade in 2029B and wobbled into proworker → "team of five" off by 2). The proworker ending file never reads `state.team` at all (augmentation does — line 22).

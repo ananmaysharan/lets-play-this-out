@@ -6,6 +6,7 @@ import { useGame } from '@/game/GameProvider';
 import { Btn } from '@/components/Btn';
 import { AvatarCanvas, AvatarSwatchCanvas } from '@/components/avatar/AvatarCanvas';
 import { AgeSlider } from '@/components/avatar/AgeSlider';
+import { useIsThumbnail } from '@/debug/ThumbnailContext';
 import {
   type AvatarConfig,
   buildHairSwatchGrid,
@@ -21,14 +22,18 @@ import {
 
 export function AvatarScene() {
   const { state, dispatch, go } = useGame();
+  const isThumbnail = useIsThumbnail();
   const [name, setName] = useState(state.name);
   const [config, setConfig] = useState<AvatarConfig>(state.avatarConfig ?? DEFAULT_AVATAR_CONFIG);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
+    // Skip auto-focus inside the /debug thumbnail — focus() steals focus and
+    // auto-scrolls the React Flow viewport, breaking the scene map layout.
+    if (isThumbnail) return;
     inputRef.current?.focus();
-  }, []);
+  }, [isThumbnail]);
 
   const update = useCallback(
     <K extends keyof AvatarConfig>(key: K, value: AvatarConfig[K]) => {

@@ -361,7 +361,7 @@ export function EndProworker7Scene() {
             </p>
             <p>
               <strong>
-                Your team of five has made it through a chaotic 9 years.
+                You and your team have made it through a chaotic 9 years!
               </strong>
             </p>
           </Memo>
@@ -386,7 +386,10 @@ export function EndProworker7Scene() {
         color="forest"
         className="continue-btn"
         style={{ marginTop: 24 }}
-        onClick={() => { posthog.capture("ending_reached", { ending_path: "proworker" }); go("end_proworker_final"); }}
+        onClick={() => {
+          posthog.capture("ending_reached", { ending_path: "proworker" });
+          go("end_proworker_final");
+        }}
       >
         TO THE LAST YEAR
       </Btn>

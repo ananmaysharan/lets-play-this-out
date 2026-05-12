@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Paper Review — Let's Play This Out</title>
+<style>
+  body { font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; max-width: 820px; margin: 32px auto; padding: 0 20px; color: #1a1a1a; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  h2 { font-size: 18px; margin-top: 32px; padding-bottom: 4px; border-bottom: 1px solid #ddd; }
+  h3 { font-size: 15px; margin-top: 22px; margin-bottom: 4px; }
+  p, ul, ol { margin: 6px 0 10px; }
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; background: #f3f3f0; padding: 1px 5px; border-radius: 3px; }
+  .pill { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 10px; vertical-align: middle; margin-right: 6px; letter-spacing: .03em; }
+  .high { background: #c92a2a; color: #fff; }
+  .med  { background: #d97706; color: #fff; }
+  .low  { background: #6b7280; color: #fff; }
+  .quote { background: #faf6ee; border-left: 3px solid #c0a060; padding: 8px 12px; margin: 8px 0; font-size: 14px; }
+  .meta { color: #666; font-size: 13px; }
+  hr { border: 0; border-top: 1px dashed #ccc; margin: 28px 0; }
+  table { border-collapse: collapse; margin: 8px 0; font-size: 14px; width: 100%; }
+  th, td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; vertical-align: top; }
+  th { background: #f3f3f0; }
+</style>
+</head>
+<body>
+
+<h1>Paper Review: <em>Let's Play This Out: The Future of AI and Work</em></h1>
+<p class="meta">Targeted at the current ACM sigconf draft. Severity: <span class="pill high">HIGH</span> blocks coherence or breaks compilation, <span class="pill med">MED</span> inconsistency a reader will notice, <span class="pill low">LOW</span> polish.</p>
+
+<h2>Top-line read</h2>
+<p>The substantive argument is there. The two things making it feel assembled are <strong>(1) the citation system is in three different styles at once</strong> and <strong>(2) the section structure has the flow of an evolving outline, not a paper</strong>. The Introduction restates the Background, the System Building section is written in future tense even though playtest data already exists, and the new Playtest section is buried as a subsection under "Methods, Concepts and Motivations" instead of being its own Findings section. There is no Discussion or Conclusion, and the appendix promises a diagram that isn't there.</p>
+<p>Most of this is fixable in a single editing pass. The fastest unlocks are: pick one citation style and apply it everywhere, hoist Playtest Observations to a top-level section, and add a short Discussion / Conclusion.</p>
+
+<h2>1. Citation system <span class="pill high">HIGH</span></h2>
+<p>Three citation styles are in use simultaneously. Pick one (recommend bare <code>\cite{key}</code>, ACM numeric) and convert all the others.</p>
+
+<table>
+<tr><th>Style observed</th><th>Examples</th><th>Fix</th></tr>
+<tr><td>Bare <code>\cite{key}</code></td><td><code>\cite{eloundou2024gpts}</code>, <code>\cite{bogost2007persuasive}</code></td><td>Keep this — it's the ACM default.</td></tr>
+<tr><td>Bracket-wrapped <code>[\cite{key}]</code></td><td><code>[\cite{oecd2024trust}]</code>, <code>[\cite{pew2025workers}]</code> (×2), <code>[\cite{pew2025experts}]</code>, <code>[\cite{sieber2025civic}]</code>, <code>[\cite{crs2025federal}]</code>, <code>[\cite{mckinsey2025state}]</code></td><td>Strip the outer brackets. ACM's <code>\cite</code> already produces brackets — you're getting <code>[[1]]</code>.</td></tr>
+<tr><td>Raw bracket numbers</td><td><code>Winardy and Septiana [13]</code>; <code>across diverse populations [19, 23]</code>; <code>workplace impacts already visible … [36]</code></td><td>These are orphan references — they don't resolve to <code>references.bib</code>. Replace with proper <code>\cite{key}</code> calls.</td></tr>
+<tr><td>Bare-name with parenthetical</td><td><code>(Sanchez)</code> in the Introduction</td><td>Replace with <code>\cite{sanchez...}</code>. Right now this is just a parenthetical word — there is no link to the bibliography.</td></tr>
+</table>
+
+<h3>Other citation issues</h3>
+<ul>
+<li><strong>Missing comma between adjacent cites:</strong> <code>\cite{brynjolfsson2022turing} \cite{autor2024applying}</code> — should be <code>\cite{brynjolfsson2022turing, autor2024applying}</code> (or comma + space).</li>
+<li><strong>Stray spaces inside multi-cite brackets:</strong> <code>[\cite{acemoglu2026building} ,  \cite{acemoglu2019automation}, …]</code> — double spaces and a leading space before the comma. Use a single comma-separated <code>\cite{a, b, c, d}</code>.</li>
+<li><strong>Citation keys you cite that may not exist in <code>references.bib</code>:</strong> verify these resolve before submission — <code>acemoglu2025simple</code>, <code>acemoglu2023proworker</code>, <code>acemoglu2026building</code>, <code>acemoglu2019automation</code>, <code>varum2010scenarios</code>, <code>tarafdar2007technostress</code>, <code>dubal2023algorithmic</code>, <code>mateescu2019algorithmic</code>, <code>kellogg2020algorithms</code>, <code>rogers2023data</code>, <code>oecd2023employment</code>, <code>oecd2024trust</code>, <code>pew2025workers</code>, <code>pew2025experts</code>, <code>sieber2025civic</code>, <code>crs2025federal</code>, <code>mckinsey2025state</code>, <code>autor2024applying</code>, <code>malone2018superminds</code>, <code>markoff2015machines</code>, <code>brynjolfsson2022turing</code>, <code>kaufman2012experience</code>, <code>kolek2024video</code>, <code>cheon2024amazon</code>, <code>ma2025speculative</code>, <code>ai2027</code>, <code>barnett2025scenarios</code>, <code>brey2017ethics</code>, <code>borjeson2006scenario</code>, <code>rattay2023sensing</code>, <code>alejandro2024roleplay</code>, <code>flanagan2009critical</code>, <code>belman2010empathy</code>, <code>isbister2016games</code>. Run a single <code>pdflatex → bibtex → pdflatex × 2</code> pass and grep the log for <code>Citation … undefined</code>.</li>
+</ul>
+
+<h2>2. Quotations and sources <span class="pill high">HIGH</span></h2>
+<ul>
+<li><strong>Korinek quote is broken:</strong>
+<div class="quote">Testifying in Congress in 2023 Dr. Anton Korinek said "we need to prepare for a range of possibilities through robust scenario planning. Yet, these scenarios and planning still rarely reach a public that is eager for them as the report last week "The 2028 Global Intelligence Crisis" showed when public discourse began.</div>
+The opening quote is never closed. The second sentence runs on, mixes "last week" (relative time, undefined) with "The 2028 Global Intelligence Crisis" (a forward reference from a 2026-dated paper that reads as if it's a real published report). No citation for the testimony. Either fix the quotation marks and add a citation to the testimony, or rewrite as paraphrase. The "2028 Global Intelligence Crisis" reference needs either a real citation or to be removed.</li>
+<li><strong>Sanchez et al. has no real citation</strong> — only "(Sanchez)" appears at the end of the paragraph.</li>
+<li><strong>Numeric citation orphans</strong> (<code>[13]</code>, <code>[19, 23]</code>, <code>[36]</code>) suggest the prose was drafted against a different reference list at some point.</li>
+</ul>
+
+<h2>3. Section structure and flow <span class="pill high">HIGH</span></h2>
+<p>The section ordering is the biggest reason it feels spaghetti. Suggested re-shuffle:</p>
+<table>
+<tr><th>Current</th><th>Proposed</th></tr>
+<tr><td>1. Introduction <em>(with FAQ-style subsections "What is the problem?" / "Why is it important?")</em></td><td>1. Introduction <em>(single flowing intro, no FAQ subsections — fold problem and importance into 2–3 paragraphs)</em></td></tr>
+<tr><td>2. Background <em>(AI &amp; Labor, Speculative Futures, Roleplay, Gameplay, Prior Attempts)</em></td><td>2. Related Work <em>(same content, same order)</em></td></tr>
+<tr><td>3. Users and Use Scenarios</td><td>3. Design Rationale <em>(target users + the four-futures taxonomy currently buried in §4)</em></td></tr>
+<tr><td>4. Methods, Concepts and Motivations <em>(scenario taxonomy + System Building + Early Playtest as a sub)</em></td><td>4. System Design and Implementation <em>(currently §4.1)</em></td></tr>
+<tr><td>5. Acknowledgments</td><td>5. Early Playtest Findings <em>(promote from subsection to section)</em></td></tr>
+<tr><td>—</td><td>6. Discussion <em>(new — what the playtest implies, limitations, next steps)</em></td></tr>
+<tr><td>—</td><td>7. Conclusion <em>(new — short)</em></td></tr>
+<tr><td>—</td><td>Acknowledgments via the <code>acks</code> environment</td></tr>
+</table>
+
+<h3>Specific structural issues</h3>
+<ul>
+<li><strong>FAQ-style subsections in Introduction:</strong> <code>\subsection{What is the problem?}</code> and <code>\subsection{Why is it important?}</code> read like an undergraduate brief. Most ACM HCI papers use a single Introduction with no subsections. Fold these into 3 flowing paragraphs.</li>
+<li><strong>The four-futures taxonomy</strong> (Augmentation, Job Erosion, Selective Shrinkage, Pro-Worker Redesign) currently sits inside "Methods, Concepts and Motivations." It is the conceptual core of the design — it should live at the top of the Design Rationale section.</li>
+<li><strong>Playtest is a subsection under "Methods"</strong>, which doesn't make sense. Empirical observations are a Findings/Results section in their own right.</li>
+<li><strong>No Discussion or Conclusion.</strong> The paper ends with playtest numbers, then jumps straight to Acknowledgments. Add at least a short Discussion (limitations, what we'd change, what this hints at for the evaluation framework you describe in §4.1) and a one-paragraph Conclusion.</li>
+<li><strong>Empty appendix:</strong> the prose says "Please see the graphic at the end of this document for a visual gameplay flow diagram" but <code>\appendix</code> is empty. Either add the figure or remove the sentence.</li>
+</ul>
+
+<h2>4. Repetition <span class="pill med">MED</span></h2>
+<ul>
+<li><strong>Verbatim duplicate inside "Why is it important?"</strong> — these two sentences appear twice in the same subsection (once near the top, once a few paragraphs later, slightly reworded):
+<div class="quote">Research suggests that AI is likely to reshape work tasks and drive occupational transitions in the coming decade, but public discourse tends to focus on extreme scenarios of full automation rather than the more subtle and common realities of task creep, increased monitoring, and shifting job expectations. Making these dynamics legible could create room for more ethical AI implementation. We want to help people better understand the potential benefits, changes, and risks of an AI-driven workplace.</div>
+Delete one of the two instances.</li>
+<li><strong>Introduction overlaps with Background §2.1.</strong> The "AI is likely to reshape work tasks" framing in §1.2 is restated more rigorously in §2.1 (AI &amp; Labor). After restructuring, push the empirical claims into Related Work and keep §1 conceptual.</li>
+<li><strong>"What is missing is not concern … but legibility"</strong> in §3.2 echoes §1.1's "we still lack accessible ways for the public to understand possible futures." Same point twice.</li>
+</ul>
+
+<h2>5. Tense and voice <span class="pill med">MED</span></h2>
+<ul>
+<li><strong>System Building is in present-continuous / future tense</strong> ("We are building the game in React", "We are evaluating Ink.js", "Pixel art assets <em>will</em> be created in Aseprite"). The Playtest section reports completed gameplay from real users — so the system is shipped. Rewrite §4.1 in past or simple-present: "The game is built in React. We use [chosen narrative engine]. Pixel art assets are created in Aseprite." Drop the alternatives you ultimately did not pick (Ink.js, pixi.js, phaser) unless they are part of the contribution.</li>
+<li><strong>"In initial testing we hope to assess two things…"</strong> at the end of §4.1 frames the evaluation in future tense, but the next subsection reports actual playtest data. Either move the questionnaire plan to Discussion / Future Work, or rewrite to acknowledge what's been done versus what's planned.</li>
+<li><strong>"If we succeed, this project could…"</strong> is a hedge that belongs in Future Work, not Background.</li>
+</ul>
+
+<h2>6. Capitalization, hyphenation, spelling <span class="pill med">MED</span></h2>
+<ul>
+<li><strong>"labor" vs "labour":</strong> §1.2 uses "long-term labour shifts" once. Everywhere else: "labor". Pick American spelling.</li>
+<li><strong>"white collar" vs "white-collar":</strong> both forms used in §4 within two paragraphs.</li>
+<li><strong>"pro worker" vs "pro-worker":</strong> §4 uses "pro worker redesign" (no hyphen) in three places; the Playtest section and elsewhere use "Pro-Worker Redesign". Pick one — recommend hyphenated, capitalized when naming the path.</li>
+<li><strong>Path names inconsistently capitalized:</strong> "augmentation, job erosion, selective shrinkage, and pro-worker redesign" (lowercase, abstract, §1) vs "Augmentation, Job Erosion, Selective Shrinkage, or Pro-Worker Redesign" (capitalized, named paths, §4.1 and Playtest). Decide on a convention. Suggest: lowercase when discussing the concept, Capitalized when naming the in-game ending.</li>
+<li><strong>"AI-and-labor" vs "AI and labor":</strong> hyphenated form appears in §2.1 ("AI-and-labor discourse") and §2.4 ("AI-and-labor futures") but bare elsewhere. Pick one.</li>
+<li><strong>UBI</strong> is used without expansion in §4.</li>
+<li><strong>"and/or"</strong> in §1.1 — informal in academic prose; use "and" or "or".</li>
+<li><strong>Em-dash style is mixed:</strong> some sections use real em-dashes ("—") with spaces, some use no em-dashes at all. Pick a house style.</li>
+<li><strong>Smart vs straight quotes:</strong> the Korinek paragraph uses curly quotes; the Speculative Futures and Gameplay subsections use straight quotes. <code>acmart</code> handles either, but consistency reads better.</li>
+<li><strong>Bolded subsection title:</strong> <code>\subsection{\textbf{Speculative Futures}}</code> double-bolds. Drop <code>\textbf</code> — every other subsection is unbolded.</li>
+</ul>
+
+<h2>7. Template / metadata placeholders <span class="pill med">MED</span></h2>
+<p>These are still set to the ACM sample defaults and will print on the camera-ready:</p>
+<ul>
+<li><code>\acmConference[CS2760]{Make sure to enter the correct conference title from your rights confirmation email}{Spring 2026}{Cambridge, MA}</code> — placeholder text inside the conference name.</li>
+<li><code>\acmDOI{XXXXXXX.XXXXXXX}</code></li>
+<li><code>\acmISBN{978-1-4503-XXXX-X/2018/06}</code> — note the 2018 inside an ISBN you set to copyright year 2026.</li>
+<li><code>\received{20 February 2007}</code>, <code>\received[revised]{12 March 2009}</code>, <code>\received[accepted]{5 June 2009}</code> — sample dates.</li>
+<li><code>\renewcommand{\shortauthors}{DeVito, Kiernan, Sharan, Mack.}</code> — trailing period inside the macro will render in the running header.</li>
+<li><strong>Acknowledgments:</strong> the comment in the source explicitly says use <code>acks</code> environment, but the section uses <code>\section{Acknowledgments}</code>. Switch to <code>\begin{acks} … \end{acks}</code> for proper metadata.</li>
+<li>Author email <code>izzie_mack@mde.harvard.edu</code> is missing the LaTeX-escaped underscore that the other emails have. Should be <code>izzie\_mack@mde.harvard.edu</code>.</li>
+</ul>
+
+<h2>8. Prose-level issues <span class="pill low">LOW</span></h2>
+<ul>
+<li><strong>Sentence fragment in §3.1:</strong>
+<div class="quote">And because many of them will soon face AI adoption decisions themselves, both as workers navigating new tools and, as managers making choices that affect others.</div>
+Begins with "And", never resolves into a main clause, and has a misplaced comma after "and,". Rewrite: "Many will soon face AI adoption decisions themselves, both as workers navigating new tools and as managers making choices that affect others."</li>
+<li><strong>"This audience is also a practical choice."</strong> in §3.1 — telegraphs structure rather than making the point. Cut.</li>
+<li><strong>The 30% software-cost example</strong> in §1.2 reads like a screenshot of in-game text dropped into the paper. Either present it as an explicit example block ("for example, players see a prompt such as: '…'") or replace with a paraphrase.</li>
+<li><strong>"both at scale and at a rapid pace"</strong> in §1.2 — verbose. "rapidly and at scale" is enough.</li>
+<li><strong>"We are thinking that this project could…"</strong> in §2.1 — informal hedge. Either commit ("This project lays the groundwork for…") or move to Future Work.</li>
+<li><strong>"\$1 trillion in 2026" market-loss claim</strong> in §1.2 has no citation and is the kind of figure a reviewer will check. Add a source.</li>
+</ul>
+
+<h2>9. Recommended fix order</h2>
+<ol>
+<li><strong>Citations</strong> — strip the <code>[\cite{...}]</code> wrappers, replace the three orphan numeric citations, replace <code>(Sanchez)</code>, add commas between adjacent <code>\cite</code>s. Verify all keys resolve.</li>
+<li><strong>Korinek paragraph</strong> — close the quote, drop or cite "The 2028 Global Intelligence Crisis", add citation to the testimony.</li>
+<li><strong>Promote Playtest to its own §5 Findings</strong>, add a short §6 Discussion and §7 Conclusion.</li>
+<li><strong>Rewrite System Building in present tense</strong>, drop unused tooling alternatives.</li>
+<li><strong>Delete the duplicate paragraph</strong> in §1.2.</li>
+<li><strong>Replace placeholder metadata</strong> (<code>\acmDOI</code>, <code>\acmISBN</code>, <code>\acmConference</code>, <code>\received</code>).</li>
+<li><strong>Fix Acknowledgments</strong> — use <code>acks</code> environment.</li>
+<li><strong>Capitalization / hyphenation pass</strong> — pick one convention for each of: labor, white-collar, pro-worker, path names.</li>
+<li><strong>Either add the gameplay diagram</strong> to <code>\appendix</code> or remove the prose reference.</li>
+</ol>
+
+<p class="meta" style="margin-top: 36px;">Generated as a one-pass review. The structural recommendations are higher-confidence than the line-level prose suggestions.</p>
+
+</body>
+</html>
